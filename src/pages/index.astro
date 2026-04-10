@@ -1,11 +1,104 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import VideoExample from '../components/VideoExample';
 ---
 
 <Layout>
-	<Welcome />
+
+  <!-- HERO -->
+  <section style="text-align: center; padding-top: 96px; padding-bottom: 96px;">
+    <p style="font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #888; margin: 0 0 16px;">audio-to-haptics</p>
+    <h1 style="font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 800; line-height: 1.1; margin: 0 0 24px;">INSERT CATCHY TAGLINE HERE</h1>
+    <p style="font-size: 1.1rem; color: #555; max-width: 480px; margin: 0 auto 40px;">
+      Sync vibration to any audio or video element on Android Chrome — no native app required.
+    </p>
+    <a href="#examples" style="font-size: 1rem; color: #111; text-decoration: none; border-bottom: 2px solid #111; padding-bottom: 2px;">See it in action ↓</a>
+  </section>
+
+  <!-- DESKTOP WARNING BANNER -->
+  <div style="background: #fff8e1; border: 1px solid #f0c000; padding: 20px 24px; text-align: center;">
+    <p style="margin: 0 0 12px; font-weight: 600;">⚠ Vibration only works on Android Chrome.</p>
+    <p style="margin: 0 0 16px; color: #555; font-size: 0.95rem;">
+      Not supported on iOS Safari, desktop Chrome, Firefox, or any other browser.
+    </p>
+    <div style="display: inline-block; border: 1px dashed #aaa; padding: 16px 24px; color: #aaa; font-size: 0.85rem;">
+      INSERT QR CODE HERE
+    </div>
+    <p style="margin: 12px 0 0; color: #888; font-size: 0.85rem;">Scan to open on your Android phone.</p>
+  </div>
+
+  <!-- EXAMPLES -->
+  <section id="examples">
+    <h2 style="margin: 0 0 8px;">Hear it. Feel it.</h2>
+    <p style="color: #555; margin: 0 0 40px;">Play any of these on Android Chrome — your phone will vibrate in sync with the audio.</p>
+
+    <VideoExample
+      client:visible
+      src="/Heartbeat.mp4"
+      title="Heartbeat"
+      credit="@user channel name here"
+      creditUrl="https://www.youtube.com/watch?v=bfWD1voJS_w"
+    />
+
+    <VideoExample
+      client:visible
+      src="/LFA.mp4"
+      title="Lexus LFA"
+      credit="@user channel name here"
+      creditUrl="https://www.youtube.com/watch?v=xO-MLcqCwSg"
+    />
+
+    <VideoExample
+      client:visible
+      src="/R7.mp4"
+      title="Yamaha R7"
+      credit="@user channel name here"
+      creditUrl="https://www.youtube.com/shorts/-3f0GF_R_k8"
+    />
+  </section>
+
+  <!-- TRY IT YOURSELF -->
+  <section style="background: #f9f9f9; max-width: 100%; padding: 48px 24px;">
+    <div style="max-width: 760px; margin: 0 auto;">
+      <h2 style="margin: 0 0 8px;">Try it yourself</h2>
+      <p style="color: #555; margin: 0 0 24px;">Drop this into any React component:</p>
+      <pre style="background: #111; color: #f8f8f8; padding: 24px; border-radius: 6px; overflow-x: auto; font-size: 0.9rem; line-height: 1.6;"><code>import &#123; useHaptics &#125; from 'audio-to-haptics/react';
+
+const audioRef = useRef&lt;HTMLAudioElement&gt;(null);
+const &#123; analyze, ready &#125; = useHaptics(audioRef);
+
+// &lt;audio ref=&#123;audioRef&#125; controls /&gt;
+// analyze('your-audio-url.mp3')</code></pre>
+    </div>
+  </section>
+
+  <!-- DOCS -->
+  <section>
+    <h2 style="margin: 0 0 8px;">Install</h2>
+    <pre style="background: #111; color: #f8f8f8; padding: 16px 20px; border-radius: 6px; font-size: 0.9rem; margin: 0 0 32px;"><code>npm install audio-to-haptics</code></pre>
+
+    <h3 style="margin: 0 0 12px;">Vanilla JS</h3>
+    <pre style="background: #111; color: #f8f8f8; padding: 24px; border-radius: 6px; overflow-x: auto; font-size: 0.9rem; line-height: 1.6; margin: 0 0 32px;"><code>import &#123; HapticEngine &#125; from 'audio-to-haptics';
+
+const engine = new HapticEngine();
+await engine.analyze(url);
+engine.attach(audioElement);
+// engine.detach() when done</code></pre>
+
+    <h3 style="margin: 0 0 12px;">React</h3>
+    <pre style="background: #111; color: #f8f8f8; padding: 24px; border-radius: 6px; overflow-x: auto; font-size: 0.9rem; line-height: 1.6; margin: 0 0 0;"><code>import &#123; useHaptics &#125; from 'audio-to-haptics/react';
+
+const audioRef = useRef&lt;HTMLAudioElement&gt;(null);
+const &#123; analyze, ready, loading, error &#125; = useHaptics(audioRef);
+
+// &lt;audio ref=&#123;audioRef&#125; controls /&gt;
+// ready === true once analysis completes</code></pre>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top: 1px solid #eee; padding: 32px 24px; text-align: center; color: #888; font-size: 0.9rem;">
+    <!-- INSERT GITHUB + LINKEDIN LINKS -->
+    <p style="margin: 0;">Built by <a href="#" style="color: #111;">INSERT GITHUB HERE</a> · <a href="#" style="color: #111;">LinkedIn</a></p>
+  </footer>
+
 </Layout>
