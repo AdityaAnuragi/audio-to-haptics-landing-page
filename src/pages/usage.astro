@@ -4,43 +4,81 @@ import UsageTabs from '../components/UsageTabs';
 ---
 
 <Layout>
-  <div class="page">
 
+  <div class="topbar">
     <a href="/" class="back">← Home</a>
+    <span class="badge">v0.0.1</span>
+  </div>
+
+  <div class="page">
 
     <h1>Usage</h1>
 
-    <h2>Install</h2>
-    <pre class="code-block"><code>npm install audio-to-haptics</code></pre>
+    <section class="block">
+      <h2>Install</h2>
+      <pre class="code-block"><code>npm install audio-to-haptics</code></pre>
+    </section>
 
-    <h2>API</h2>
-    <UsageTabs client:load />
+    <section class="block">
+      <h2>API</h2>
+      <UsageTabs client:load />
+    </section>
 
   </div>
+
 </Layout>
 
 <style>
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    border-bottom: 1px solid #eee;
+  }
+  .back {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  .back:hover { color: #111; }
+  .badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #f3f0ff;
+    color: #7c3aed;
+    border: 1px solid #ddd6fe;
+    border-radius: 20px;
+    padding: 3px 10px;
+  }
+
   .page {
     max-width: 680px;
     margin: 0 auto;
-    padding: 48px 24px 96px;
+    padding: 56px 24px 96px;
   }
-  .back {
-    display: inline-block;
-    color: #aaa;
-    text-decoration: none;
-    font-size: 0.9rem;
-    margin-bottom: 40px;
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin: 0 0 48px;
+    color: #0f0f0f;
   }
-  .back:hover { color: #111; }
-  h1 { margin: 0 0 40px; font-size: 2rem; }
-  h2 { margin: 0 0 12px; font-size: 1rem; font-weight: 600; color: #555; text-transform: uppercase; letter-spacing: 0.05em; }
-  h2 + * { margin-bottom: 40px; }
+
+  .block { margin-bottom: 40px; }
+  h2 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #7c3aed;
+    margin: 0 0 12px;
+  }
   .code-block {
-    background: #111;
-    color: #f8f8f8;
+    background: #0f0f0f;
+    color: #e8e8e8;
     padding: 16px 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 0.9rem;
     margin: 0;
   }

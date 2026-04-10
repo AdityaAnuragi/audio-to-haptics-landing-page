@@ -1,46 +1,52 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 
 type Tab = 'react' | 'vanilla';
 
 const SNIPPETS: Record<Tab, string> = {
-  react: `import { useHaptics } from 'audio-to-haptics/react';
+  react: [
+    "import { useHaptics } from 'audio-to-haptics/react';",
+    '',
+    'const audioRef = useRef<HTMLAudioElement>(null);',
+    'const { analyze, ready, loading, error } = useHaptics(audioRef);',
+    '',
+    '// <audio ref={audioRef} controls />',
+    "// analyze('your-audio-url.mp3')",
+  ].join('\n'),
 
-const audioRef = useRef<HTMLAudioElement>(null);
-const { analyze, ready, loading, error } = useHaptics(audioRef);
-
-// <audio ref={audioRef} controls />
-// analyze('your-audio-url.mp3')`,
-
-  vanilla: `import { HapticEngine } from 'audio-to-haptics';
-
-const engine = new HapticEngine();
-await engine.analyze(url);
-engine.attach(audioElement);
-
-// engine.detach()      — stop haptics, remove listeners
-// engine.muted = true  — suppress vibration without stopping`,
+  vanilla: [
+    "import { HapticEngine } from 'audio-to-haptics';",
+    '',
+    'const engine = new HapticEngine();',
+    'await engine.analyze(url);',
+    'engine.attach(audioElement);',
+    '',
+    '// engine.detach()      — stop haptics, remove listeners',
+    '// engine.muted = true  — suppress vibration without stopping',
+  ].join('\n'),
 };
+
+const ACCENT = '#7c3aed';
 
 export default function UsageTabs() {
   const [tab, setTab] = useState<Tab>('react');
   const [copied, setCopied] = useState(false);
 
   const copy = () => {
-    navigator.clipboard.writeText(SNIPPETS[tab]);
+    void navigator.clipboard.writeText(SNIPPETS[tab]);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const tabBtn = (t: Tab): React.CSSProperties => ({
-    padding: '6px 16px',
+  const tabBtn = (t: Tab): CSSProperties => ({
+    padding: '6px 18px',
     borderRadius: '6px',
-    border: '1px solid',
-    borderColor: tab === t ? '#111' : '#ddd',
-    background: tab === t ? '#111' : 'transparent',
+    border: '1.5px solid',
+    borderColor: tab === t ? ACCENT : '#e0e0e0',
+    background: tab === t ? ACCENT : 'transparent',
     color: tab === t ? '#fff' : '#888',
     cursor: 'pointer',
     fontSize: '0.875rem',
-    fontWeight: 500,
+    fontWeight: 600,
   });
 
   return (
@@ -51,12 +57,12 @@ export default function UsageTabs() {
       </div>
       <div style={{ position: 'relative' }}>
         <pre style={{
-          background: '#111',
-          color: '#f8f8f8',
-          padding: '24px',
-          borderRadius: '8px',
+          background: '#0f0f0f',
+          color: '#e8e8e8',
+          padding: '28px',
+          borderRadius: '10px',
           fontSize: '0.875rem',
-          lineHeight: 1.7,
+          lineHeight: 1.8,
           margin: 0,
           overflowX: 'auto',
         }}>
@@ -66,15 +72,17 @@ export default function UsageTabs() {
           onClick={copy}
           style={{
             position: 'absolute',
-            top: '12px',
-            right: '12px',
-            background: 'rgba(255,255,255,0.1)',
-            border: '1px solid rgba(255,255,255,0.2)',
-            color: '#ccc',
-            padding: '4px 12px',
-            borderRadius: '4px',
+            top: '14px',
+            right: '14px',
+            background: copied ? ACCENT : 'rgba(255,255,255,0.08)',
+            border: '1px solid rgba(255,255,255,0.15)',
+            color: '#ddd',
+            padding: '4px 14px',
+            borderRadius: '5px',
             cursor: 'pointer',
             fontSize: '0.8rem',
+            fontWeight: 500,
+            transition: 'background 0.2s',
           }}
         >
           {copied ? 'Copied!' : 'Copy'}

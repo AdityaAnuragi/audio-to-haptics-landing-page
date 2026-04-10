@@ -17,27 +17,30 @@ export default function VideoExample({ src, title, credit, creditUrl }: Props) {
   }, []);
 
   return (
-    <div style={{ marginBottom: '56px' }}>
-      <h3 style={{ margin: '0 0 12px', fontSize: '1rem', fontWeight: 600, color: '#555', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-        {title}
-      </h3>
-      {loading && <p style={{ color: '#aaa', fontSize: '13px', margin: '0 0 8px' }}>Analyzing audio...</p>}
-      {error && <p style={{ color: '#c00', fontSize: '13px', margin: '0 0 8px' }}>Could not load audio.</p>}
+    <div style={{
+      marginBottom: '32px',
+      background: '#fff',
+      border: '1px solid #ebebeb',
+      borderRadius: '14px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+    }}>
       <video
         ref={videoRef}
         src={src}
         controls
-        style={{
-          width: '100%',
-          maxWidth: '640px',
-          display: 'block',
-          background: '#000',
-          borderRadius: '8px',
-        }}
+        style={{ width: '100%', maxWidth: '100%', display: 'block', background: '#000' }}
       />
-      <small style={{ display: 'block', marginTop: '8px', color: '#aaa', fontSize: '12px' }}>
-        Credit: <a href={creditUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>{credit}</a>
-      </small>
+      <div style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <span style={{ fontWeight: 700, fontSize: '0.9rem', letterSpacing: '0.03em' }}>{title}</span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          {loading && <span style={{ color: '#aaa', fontSize: '12px' }}>Analyzing…</span>}
+          {error && <span style={{ color: '#c00', fontSize: '12px' }}>Load failed</span>}
+          <small style={{ color: '#bbb', fontSize: '12px' }}>
+            Credit: <a href={creditUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#bbb' }}>{credit}</a>
+          </small>
+        </span>
+      </div>
     </div>
   );
 }
