@@ -39,21 +39,21 @@ import VideoExample from '../components/VideoExample';
   </section>
 
   <!-- DESKTOP WARNING BANNER -->
-  <div class="banner">
+  <div class="banner" id="banner">
     <div class="banner-inner">
       <div class="banner-text">
         <p class="banner-title">⚠ Vibration only works on Android Chrome.</p>
         <p class="banner-sub">Not supported on iOS Safari, desktop browsers, or Firefox.</p>
       </div>
-      <div class="banner-qr" id="banner-qr">
+      <div class="banner-qr">
         <div class="qr-box">INSERT QR CODE HERE</div>
         <p class="qr-label">Scan on your Android phone</p>
       </div>
     </div>
   </div>
   <script>
-    if ('vibrate' in navigator) {
-      document.getElementById('banner-qr')!.style.display = 'none';
+    if ('vibrate' in navigator && /Android/i.test(navigator.userAgent)) {
+      document.getElementById('banner')!.style.display = 'none';
     }
   </script>
 
@@ -160,9 +160,9 @@ import VideoExample from '../components/VideoExample';
 
   /* ── BANNER ───────────────────────────── */
   .banner {
-    background: #f5f3ff;
-    border-top: 1px solid #ddd6fe;
-    border-bottom: 1px solid #ddd6fe;
+    background: #fef2f2;
+    border-top: 1px solid #fecaca;
+    border-bottom: 1px solid #fecaca;
     padding: 28px 24px;
   }
   .banner-inner {
@@ -174,17 +174,17 @@ import VideoExample from '../components/VideoExample';
     gap: 24px;
   }
   .banner-text { flex: 1; }
-  .banner-title { margin: 0 0 4px; font-weight: 700; font-size: 0.95rem; color: #4c1d95; }
-  .banner-sub { margin: 0; font-size: 0.875rem; color: #7c3aed; }
+  .banner-title { margin: 0 0 4px; font-weight: 700; font-size: 0.95rem; color: #991b1b; }
+  .banner-sub { margin: 0; font-size: 0.875rem; color: #b91c1c; }
   .banner-qr { text-align: center; flex-shrink: 0; }
   .qr-box {
-    border: 1.5px dashed #c4b5fd;
+    border: 1.5px dashed #fca5a5;
     border-radius: 6px;
     padding: 12px 20px;
-    color: #c4b5fd;
+    color: #fca5a5;
     font-size: 0.8rem;
   }
-  .qr-label { margin: 6px 0 0; font-size: 0.75rem; color: #a78bfa; }
+  .qr-label { margin: 6px 0 0; font-size: 0.75rem; color: #f87171; }
 
   /* Hide QR on mobile — they're already on a phone */
   @media (max-width: 540px) {
