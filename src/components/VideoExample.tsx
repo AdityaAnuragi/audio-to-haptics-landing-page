@@ -1,5 +1,7 @@
 import { useRef, useEffect } from 'react';
+import { useStore } from '@nanostores/react';
 import { useHaptics } from 'audio-to-haptics/react';
+import { currentVideo } from '../store';
 
 interface Props {
   src: string;
@@ -11,10 +13,19 @@ interface Props {
 export default function VideoExample({ src, title, credit, creditUrl }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { analyze, loading, error } = useHaptics(videoRef);
+  const playing = useStore(currentVideo);
 
+  useEffect(() => { void analyze(src); }, []);
+
+  // pause and reset this video when another one starts
   useEffect(() => {
-    void analyze(src);
-  }, []);
+    if (playing !== null && playing !== src) {
+      const video = videoRef.current;
+      if (!video) return;
+      video.pause();
+      video.currentTime = 0;
+    }
+  }, [playing]);
 
   return (
     <div style={{
@@ -29,6 +40,8 @@ export default function VideoExample({ src, title, credit, creditUrl }: Props) {
         ref={videoRef}
         src={src}
         controls
+        onPlay={() => currentVideo.set(src)}
+        onPause={() => { if (currentVideo.get() === src) currentVideo.set(null); }}
         style={{ width: '100%', maxWidth: '100%', display: 'block', background: '#000' }}
       />
       <div style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
