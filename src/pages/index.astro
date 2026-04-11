@@ -39,20 +39,22 @@ import VideoExample from '../components/VideoExample';
   </section>
 
   <!-- DESKTOP WARNING BANNER -->
-  <div class="banner" id="banner">
-    <div class="banner-inner">
-      <div class="banner-text">
-        <p class="banner-title">⚠ Vibration only works on Android Chrome.</p>
-        <p class="banner-sub">Not supported on iOS Safari, desktop browsers, or Firefox.</p>
-      </div>
-      <div class="banner-qr">
-        <div class="qr-box">INSERT QR CODE HERE</div>
-        <p class="qr-label">Scan on your Android phone</p>
+  <div class="banner-wrap" id="banner">
+    <div class="banner">
+      <div class="banner-inner">
+        <div class="banner-text">
+          <p class="banner-title">⚠ Vibration only works on Android Chrome.</p>
+          <p class="banner-sub">Not supported on iOS Safari, desktop browsers, or Firefox.</p>
+        </div>
+        <div class="banner-qr">
+          <div class="qr-box">INSERT QR CODE HERE</div>
+          <p class="qr-label">Scan on your Android phone</p>
+        </div>
       </div>
     </div>
   </div>
   <script>
-    if ('vibrate' in navigator && /Android/i.test(navigator.userAgent)) {
+    if ('vibrate' in navigator && navigator.userAgent.toLowerCase().includes('android')) {
       document.getElementById('banner')!.style.display = 'none';
     }
   </script>
@@ -159,15 +161,18 @@ import VideoExample from '../components/VideoExample';
   }
 
   /* ── BANNER ───────────────────────────── */
+  .banner-wrap {
+    max-width: 680px;
+    margin: 32px auto 0;
+    padding: 0 24px;
+  }
   .banner {
     background: #fef2f2;
-    border-top: 1px solid #fecaca;
-    border-bottom: 1px solid #fecaca;
-    padding: 28px 24px;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 20px 24px;
   }
   .banner-inner {
-    max-width: 700px;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
