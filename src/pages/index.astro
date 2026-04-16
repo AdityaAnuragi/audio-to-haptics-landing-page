@@ -66,6 +66,13 @@ import VideoExample from '../components/VideoExample';
 
     <VideoExample
       client:visible
+      src="/LFA.mp4"
+      title="Car rev"
+      credit="@user channel name here"
+      creditUrl="https://www.youtube.com/watch?v=xO-MLcqCwSg"
+    />
+    <VideoExample
+      client:visible
       src="/HeartBeatNew.mp4"
       title="Heartbeat monitor"
       credit="@user channel name here"
@@ -74,17 +81,11 @@ import VideoExample from '../components/VideoExample';
     />
     <VideoExample
       client:visible
-      src="/LFA.mp4"
-      title="Car rev"
+      src="/AWP.mp4"
+      title="Sniper shot"
       credit="@user channel name here"
-      creditUrl="https://www.youtube.com/watch?v=xO-MLcqCwSg"
-    />
-    <VideoExample
-      client:visible
-      src="/R7.mp4"
-      title="Bike rev"
-      credit="@user channel name here"
-      creditUrl="https://www.youtube.com/shorts/-3f0GF_R_k8"
+      creditUrl=""
+      opts={{ sustainLowerBound: 0.5, sustainUpperBound: 1.5 }}
     />
   </section>
 
