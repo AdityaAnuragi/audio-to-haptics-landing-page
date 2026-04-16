@@ -66,10 +66,11 @@ import VideoExample from '../components/VideoExample';
 
     <VideoExample
       client:visible
-      src="/Heartbeat.mp4"
+      src="/HeartBeatNew.mp4"
       title="Heartbeat monitor"
       credit="@user channel name here"
       creditUrl="https://www.youtube.com/watch?v=bfWD1voJS_w"
+      opts={{ sustainUpperBound: 1.1 }}
     />
     <VideoExample
       client:visible
@@ -201,14 +202,17 @@ import VideoExample from '../components/VideoExample';
   .examples {
     max-width: 680px;
     margin: 0 auto;
-    padding: 72px 24px;
+    padding: 72px 24px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
   }
   .examples h2 { margin: 0 0 8px; font-size: 1.75rem; font-weight: 800; }
-  .examples-sub { color: #888; margin: 0 0 40px; line-height: 1.5; }
+  .examples-sub { color: #444; margin: 0 0 40px; line-height: 1.5; }
 
   /* ── CTA STRIP ────────────────────────── */
   .cta-strip {
-    padding: 56px 24px;
+    padding: 48px 24px;
     text-align: center;
   }
   .btn-accent {
@@ -217,29 +221,32 @@ import VideoExample from '../components/VideoExample';
     border-radius: 8px;
     font-weight: 700;
     font-size: 1rem;
-    background: #7c3aed;
-    color: #fff;
+    background: rgba(255,255,255,0.40);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.6);
+    color: #111;
     display: inline-block;
   }
 
   /* ── FOOTER ───────────────────────────── */
   footer {
     border-top: 1px solid #eee;
-    padding: 48px 24px;
+    padding: 32px 24px;
     text-align: center;
     font-size: 0.9rem;
   }
   footer p { margin: 0 0 8px; }
   footer p:last-child { margin: 0; }
-  footer a { color: #aaa; text-decoration: none; }
+  footer a { color: #555; text-decoration: none; }
   footer a:hover { color: #111; }
   .footer-by {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: #888;
+    color: #444;
   }
   .avatar { width: 26px; height: 26px; border-radius: 50%; }
-  .footer-links { color: #bbb; }
+  .footer-links { color: #555; }
 </style>

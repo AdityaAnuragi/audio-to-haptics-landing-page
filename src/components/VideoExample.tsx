@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import { useHaptics } from 'audio-to-haptics/react';
+import type { HapticOptions } from 'audio-to-haptics';
 import { currentVideo } from '../store';
 
 interface Props {
@@ -8,11 +9,12 @@ interface Props {
   title: string;
   credit: string;
   creditUrl: string;
+  opts?: Partial<HapticOptions>;
 }
 
-export default function VideoExample({ src, title, credit, creditUrl }: Props) {
+export default function VideoExample({ src, title, credit, creditUrl, opts }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { analyze, loading, error } = useHaptics(videoRef);
+  const { analyze, loading, error } = useHaptics(videoRef, opts);
   const playing = useStore(currentVideo);
 
   useEffect(() => { void analyze(src); }, []);
@@ -29,12 +31,13 @@ export default function VideoExample({ src, title, credit, creditUrl }: Props) {
 
   return (
     <div style={{
-      marginBottom: '32px',
-      background: '#fff',
-      border: '1px solid #ebebeb',
+      background: 'rgba(255,255,255,0.40)',
+      backdropFilter: 'blur(16px)',
+      WebkitBackdropFilter: 'blur(16px)',
+      border: '1px solid rgba(255,255,255,0.6)',
       borderRadius: '14px',
       overflow: 'hidden',
-      boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+      boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
     }}>
       <video
         ref={videoRef}
@@ -49,8 +52,8 @@ export default function VideoExample({ src, title, credit, creditUrl }: Props) {
         <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           {loading && <span style={{ color: '#aaa', fontSize: '12px' }}>Analyzing…</span>}
           {error && <span style={{ color: '#c00', fontSize: '12px' }}>Load failed</span>}
-          <small style={{ color: '#bbb', fontSize: '12px' }}>
-            Credit: <a href={creditUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#bbb' }}>{credit}</a>
+          <small style={{ color: '#555', fontSize: '12px' }}>
+            Credit: <a href={creditUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#555' }}>{credit}</a>
           </small>
         </span>
       </div>
