@@ -44,7 +44,6 @@ import VideoExample from '../components/VideoExample';
       <div class="banner-inner">
         <div class="banner-text">
           <p class="banner-title">⚠ Vibration only works on Android Chrome.</p>
-          <p class="banner-sub">Not supported on iOS Safari, desktop browsers, or Firefox.</p>
         </div>
         <div class="banner-qr">
           <div class="qr-box">INSERT QR CODE HERE</div>
@@ -54,7 +53,8 @@ import VideoExample from '../components/VideoExample';
     </div>
   </div>
   <script>
-    if ('vibrate' in navigator && navigator.userAgent.toLowerCase().includes('android')) {
+    const ua = navigator.userAgent.toLowerCase();
+    if ('vibrate' in navigator && ua.includes('android') && ua.includes('chrome')) {
       document.getElementById('banner')!.style.display = 'none';
     }
   </script>
@@ -62,7 +62,6 @@ import VideoExample from '../components/VideoExample';
   <!-- EXAMPLES -->
   <section class="examples" id="examples">
     <h2>Hear it. Feel it.</h2>
-    <p class="examples-sub">Play on Android Chrome and feel your phone vibrate in sync.</p>
 
     <VideoExample
       client:visible
