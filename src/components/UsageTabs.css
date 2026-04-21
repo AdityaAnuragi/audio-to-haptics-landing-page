@@ -1,0 +1,11 @@
+.usage-tab-btn {
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.usage-tab-btn:hover { filter: brightness(1.15); }
+.usage-tab-btn:active { filter: brightness(0.85); }
+
+.usage-copy-btn {
+  transition: background 0.2s;
+}
+.usage-copy-btn:hover { background: rgba(255,255,255,0.16) !important; }
+.usage-copy-btn:active { background: rgba(255,255,255,0.05) !important; }

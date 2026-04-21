@@ -1,4 +1,5 @@
 import { useState, type CSSProperties } from 'react';
+import './UsageTabs.css';
 
 type Tab = 'react' | 'vanilla';
 
@@ -52,8 +53,8 @@ export default function UsageTabs() {
   return (
     <div>
       <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
-        <button style={tabBtn('react')} onClick={() => setTab('react')}>React</button>
-        <button style={tabBtn('vanilla')} onClick={() => setTab('vanilla')}>Vanilla JS</button>
+        <button className="usage-tab-btn" style={tabBtn('react')} onClick={() => setTab('react')}>React</button>
+        <button className="usage-tab-btn" style={tabBtn('vanilla')} onClick={() => setTab('vanilla')}>Vanilla JS</button>
       </div>
       <div style={{ position: 'relative' }}>
         <pre style={{
@@ -69,6 +70,7 @@ export default function UsageTabs() {
           <code>{SNIPPETS[tab]}</code>
         </pre>
         <button
+          className="usage-copy-btn"
           onClick={copy}
           style={{
             position: 'absolute',
@@ -82,7 +84,6 @@ export default function UsageTabs() {
             cursor: 'pointer',
             fontSize: '0.8rem',
             fontWeight: 500,
-            transition: 'background 0.2s',
           }}
         >
           {copied ? 'Copied!' : 'Copy'}
