@@ -64,13 +64,8 @@ import PageHero from '../components/PageHero.astro';
 
   <!-- EXAMPLES -->
   <section class="examples" id="examples">
-    <h2>Hear it. Feel it.</h2>
-
     <!-- Group 1: isolated spikes -->
-    <PageHero>
-      <h3 class="group-heading">Spike detection</h3>
-      <p class="group-sub">The library splits audio into ~60ms chunks and compares each one to recent history. When a chunk is significantly louder than what came before it, that's a spike — and a haptic pulse fires. One spike, one vibration.</p>
-    </PageHero>
+    <PageHero><p class="group-placeholder">INSERT EXPLANATION 1</p></PageHero>
 
     <VideoExample
       client:visible
@@ -89,10 +84,7 @@ import PageHero from '../components/PageHero.astro';
     />
 
     <!-- Group 2: sustained sound / PWM -->
-    <PageHero>
-      <h3 class="group-heading">Sustained sound</h3>
-      <p class="group-sub">When a sound lingers — like the reverb tail after a gunshot — the library keeps vibrating but switches to PWM: rapid on/off cycles that simulate a rumble fading out. The longer the tail, the longer the buzz.</p>
-    </PageHero>
+    <PageHero><p class="group-placeholder">INSERT EXPLANATION 2</p></PageHero>
 
     <VideoExample
       client:visible
@@ -229,9 +221,7 @@ import PageHero from '../components/PageHero.astro';
     flex-direction: column;
     gap: 32px;
   }
-  .examples h2 { margin: 0 0 40px; font-size: 1.75rem; font-weight: 800; }
-  .group-heading { margin: 0 0 10px; font-size: 1.1rem; font-weight: 700; color: #111; }
-  .group-sub { margin: 0; font-size: 0.95rem; color: #555; line-height: 1.65; max-width: 560px; }
+  .group-placeholder { color: #333; font-size: 0.95rem; margin: 0; }
 
   /* ── CTA STRIP ────────────────────────── */
   .cta-strip {
