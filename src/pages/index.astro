@@ -7,6 +7,7 @@ import PageHero from '../components/PageHero.astro';
 <Layout>
 
   <!-- HERO -->
+  <section class="hero">
   <PageHero>
     <div class="hero-icons">
       <!-- Waveform bars -->
@@ -38,6 +39,7 @@ import PageHero from '../components/PageHero.astro';
       <a href="/usage" class="btn-solid">Get started →</a>
     </div>
   </PageHero>
+  </section>
 
   <!-- DESKTOP WARNING BANNER -->
   <div class="banner-wrap" id="banner">
@@ -64,6 +66,12 @@ import PageHero from '../components/PageHero.astro';
   <section class="examples" id="examples">
     <h2>Hear it. Feel it.</h2>
 
+    <!-- Group 1: isolated spikes -->
+    <PageHero>
+      <h3 class="group-heading">Spike detection</h3>
+      <p class="group-sub">The library splits audio into ~60ms chunks and compares each one to recent history. When a chunk is significantly louder than what came before it, that's a spike — and a haptic pulse fires. One spike, one vibration.</p>
+    </PageHero>
+
     <VideoExample
       client:visible
       src="/LFA.mp4"
@@ -79,6 +87,13 @@ import PageHero from '../components/PageHero.astro';
       creditUrl="https://www.youtube.com/watch?v=bfWD1voJS_w"
       opts={{ sustainUpperBound: 1.1, shortChainBuckets: 6 }}
     />
+
+    <!-- Group 2: sustained sound / PWM -->
+    <PageHero>
+      <h3 class="group-heading">Sustained sound</h3>
+      <p class="group-sub">When a sound lingers — like the reverb tail after a gunshot — the library keeps vibrating but switches to PWM: rapid on/off cycles that simulate a rumble fading out. The longer the tail, the longer the buzz.</p>
+    </PageHero>
+
     <VideoExample
       client:visible
       src="AWP_fixed.mp4"
@@ -109,8 +124,18 @@ import PageHero from '../components/PageHero.astro';
 </Layout>
 
 <style>
-  /* ── HERO CONTENT ─────────────────────── */
-  /* Layout/bg/animation owned by PageHero.astro */
+  /* ── HERO ─────────────────────────────── */
+  .hero {
+    background: #0f0f0f;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+  }
   .hero-icons {
     display: flex;
     align-items: center;
@@ -204,8 +229,9 @@ import PageHero from '../components/PageHero.astro';
     flex-direction: column;
     gap: 32px;
   }
-  .examples h2 { margin: 0 0 8px; font-size: 1.75rem; font-weight: 800; }
-  .examples-sub { color: #444; margin: 0 0 40px; line-height: 1.5; }
+  .examples h2 { margin: 0 0 40px; font-size: 1.75rem; font-weight: 800; }
+  .group-heading { margin: 0 0 10px; font-size: 1.1rem; font-weight: 700; color: #111; }
+  .group-sub { margin: 0; font-size: 0.95rem; color: #555; line-height: 1.65; max-width: 560px; }
 
   /* ── CTA STRIP ────────────────────────── */
   .cta-strip {
