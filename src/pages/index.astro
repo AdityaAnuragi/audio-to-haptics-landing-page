@@ -1,12 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import VideoExample from '../components/VideoExample';
+import PageHero from '../components/PageHero.astro';
 ---
 
 <Layout>
 
   <!-- HERO -->
-  <section class="hero">
+  <PageHero>
     <div class="hero-icons">
       <!-- Waveform bars -->
       <svg xmlns="http://www.w3.org/2000/svg" width="52" height="32" viewBox="0 0 52 32" aria-hidden="true">
@@ -30,13 +31,13 @@ import VideoExample from '../components/VideoExample';
     </div>
 
     <h1>INSERT CATCHY TAGLINE HERE</h1>
-    <p>Sync vibration to any audio or video on Android Chrome — no native app required.</p>
+    <p class="hero-sub">Sync vibration to any audio or video on Android Chrome — no native app required.</p>
 
     <div class="hero-ctas">
       <a href="#examples" class="btn-ghost">See it in action ↓</a>
       <a href="/usage" class="btn-solid">Get started →</a>
     </div>
-  </section>
+  </PageHero>
 
   <!-- DESKTOP WARNING BANNER -->
   <div class="banner-wrap" id="banner">
@@ -108,18 +109,8 @@ import VideoExample from '../components/VideoExample';
 </Layout>
 
 <style>
-  /* ── HERO ─────────────────────────────── */
-  .hero {
-    background: #0f0f0f;
-    color: #fff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 80px 24px;
-  }
+  /* ── HERO CONTENT ─────────────────────── */
+  /* Layout/bg/animation owned by PageHero.astro */
   .hero-icons {
     display: flex;
     align-items: center;
@@ -127,14 +118,14 @@ import VideoExample from '../components/VideoExample';
     margin-bottom: 40px;
   }
   .hero-arrow { font-size: 1.25rem; opacity: 0.35; }
-  .hero h1 {
+  h1 {
     font-size: clamp(2rem, 5.5vw, 3.25rem);
     font-weight: 800;
     line-height: 1.1;
     margin: 0 0 20px;
     max-width: 640px;
   }
-  .hero p {
+  .hero-sub {
     font-size: 1.05rem;
     color: rgba(255,255,255,0.5);
     max-width: 400px;
