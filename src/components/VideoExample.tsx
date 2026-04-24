@@ -3,6 +3,7 @@ import { useStore } from '@nanostores/react';
 import { useHaptics } from 'audio-to-haptics/react';
 import type { HapticOptions } from 'audio-to-haptics';
 import { currentVideo } from '../store';
+import HapticBlob from './HapticBlob';
 
 interface Props {
   src: string;
@@ -47,6 +48,9 @@ export default function VideoExample({ src, title, credit, creditUrl, opts }: Pr
         onPause={() => { if (currentVideo.get() === src) currentVideo.set(null); }}
         style={{ width: '100%', maxWidth: '100%', display: 'block', background: '#000' }}
       />
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '48px 0', background: 'rgba(0,0,0,0.06)' }}>
+        <HapticBlob />
+      </div>
       <div style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <span style={{ fontWeight: 700, fontSize: '0.9rem', letterSpacing: '0.03em' }}>{title}</span>
         <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
