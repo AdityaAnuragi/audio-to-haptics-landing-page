@@ -36,10 +36,10 @@ export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = f
   smoothedRef.current += (intensity - prev) * (intensity > prev ? 0.4 : 0.15);
 
   // only update shape when a chain is active — during silence the blob fades with the correct shape
-  if (intensity > 0) burstRef.current = isShortBurst;
+  if (intensity > 0.1) burstRef.current = isShortBurst;
 
   const smoothed = smoothedRef.current;
-  const burst = burstRef.current;
+  const burst = burstRef.current && smoothed > 0.05;
 
   const cx = size / 2;
   const cy = size / 2;
@@ -83,7 +83,7 @@ export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = f
       style={{ overflow: 'visible' }}
       aria-hidden="true"
     >
-      <path d={smoothPath(pts)} fill="red" />
+      <path d={smoothPath(pts)} fill="#7c3aed" />
     </svg>
   );
 }
