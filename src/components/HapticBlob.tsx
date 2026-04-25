@@ -1,5 +1,7 @@
 interface Props {
   size?: number;
+  intensity?: number;
+  isShortBurst?: boolean;
 }
 
 function norm(a: number): number {
@@ -24,15 +26,11 @@ function smoothPath(pts: { x: number; y: number }[]): string {
   return d + ' Z';
 }
 
-export default function HapticBlob({ size = 160 }: Props) {
+export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = false }: Props) {
   const cx = size / 2;
   const cy = size / 2;
   const baseR = size * 0.42;
 
-  // --- hardcoded fake data ---
-  const intensity = 1;
-  const isShortBurst = false;
-  // ---------------------------
 
   const TOP  = norm(-Math.PI / 2);
   const EAR  = 42 * Math.PI / 180;
