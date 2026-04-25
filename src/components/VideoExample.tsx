@@ -47,6 +47,7 @@ export default function VideoExample({ src, title, credit, creditUrl, opts }: Pr
         onPlay={() => currentVideo.set(src)}
         onPause={() => { if (currentVideo.get() === src) currentVideo.set(null); }}
         style={{ width: '100%', maxWidth: '100%', display: 'block', background: '#000' }}
+        playsInline
       />
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '48px 0', background: 'rgba(0,0,0,0.06)' }}>
         <HapticBlob intensity={playbackBucketIntensity} isShortBurst={playbackChainIsShortBurst} />
