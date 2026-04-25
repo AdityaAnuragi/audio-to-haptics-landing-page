@@ -30,14 +30,16 @@ function smoothPath(pts: { x: number; y: number }[]): string {
 
 export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = false }: Props) {
   const smoothedRef = useRef(0);
-  const displayedBurstRef = useRef(false);
+  const burstRef = useRef(false);
 
-  const prevSmoothed = smoothedRef.current;
-  smoothedRef.current += (intensity - smoothedRef.current) * 0.15;
-  if (prevSmoothed < 0.05) displayedBurstRef.current = isShortBurst;
+  const prev = smoothedRef.current;
+  smoothedRef.current += (intensity - prev) * (intensity > prev ? 0.4 : 0.15);
+
+  // only update shape when a chain is active — during silence the blob fades with the correct shape
+  if (intensity > 0) burstRef.current = isShortBurst;
 
   const smoothed = smoothedRef.current;
-  const burst = displayedBurstRef.current;
+  const burst = burstRef.current;
 
   const cx = size / 2;
   const cy = size / 2;
