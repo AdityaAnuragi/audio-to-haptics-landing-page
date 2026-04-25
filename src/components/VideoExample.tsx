@@ -82,7 +82,7 @@ export default function VideoExample({ src, title, credit, creditUrl, opts }: Pr
         style={{ width: '100%', maxWidth: '100%', display: 'block', background: '#000' }}
       />
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '48px 0', background: 'rgba(0,0,0,0.06)' }}>
-<HapticBlob intensity={playbackBucketIntensity} isShortBurst={playbackChainIsShortBurst} />
+        <HapticBlob intensity={playbackBucketIntensity} isShortBurst={playbackChainIsShortBurst} />
       </div>
       <div style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <span style={{ fontWeight: 700, fontSize: '0.9rem', letterSpacing: '0.03em' }}>{title}</span>
