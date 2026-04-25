@@ -29,28 +29,37 @@ export default function HapticBlob({ size = 160 }: Props) {
   const cy = size / 2;
   const baseR = size * 0.42;
 
-  // --- hardcoded burst for now ---
-  const intensity = 1
-  // --------------------------------
+  // --- hardcoded fake data ---
+  const intensity = 1;
+  const isShortBurst = false;
+  // ---------------------------
 
-  const TOP = norm(-Math.PI / 2); // 3π/2 — "up" in SVG coords
-  const EAR = 42 * Math.PI / 180; // 42° offset from top for each ear
+  const TOP  = norm(-Math.PI / 2);
+  const EAR  = 42 * Math.PI / 180;
+  // 4 and 8 o'clock — more spread out, symmetric about the bottom vertical axis
+  const BR   = Math.PI / 6;       // bottom-right (4 o'clock)
+  const BL   = 5 * Math.PI / 6;   // bottom-left  (8 o'clock)
 
-  // Two ear peaks + a small centre bridge, each defined as a gaussian spike
-  const spikes = [
-    { a: norm(TOP - EAR), h: 1.0 }, // left ear
-    { a: norm(TOP + EAR), h: 1.0 }, // right ear
-    { a: TOP,             h: 0.25 }, // slight bridge between ears
-  ];
+  const spikes = isShortBurst
+    ? [
+        { a: norm(TOP - EAR), h: 1.0,  k: 15 },
+        { a: norm(TOP + EAR), h: 1.0,  k: 15 },
+        { a: TOP,             h: 0.25, k: 15 },
+      ]
+    : [
+        { a: BR, h: 1.0, k: 6 },
+        { a: BL, h: 1.0, k: 6 },
+      ];
 
-  // 90 evenly-spaced points — fine enough that bezier stays smooth throughout
+  const multiplier = isShortBurst ? 1.1 : 0.35;
+
   const pts = Array.from({ length: 90 }, (_, i) => {
     const angle = (i / 90) * 2 * Math.PI;
     const weight = spikes.reduce((sum, s) => {
       const diff = Math.min(Math.abs(angle - s.a), 2 * Math.PI - Math.abs(angle - s.a));
-      return sum + s.h * Math.exp(-15 * diff * diff);
+      return sum + s.h * Math.exp(-s.k * diff * diff);
     }, 0);
-    const r = baseR * (1 + intensity * Math.min(weight, 1) * 1.1);
+    const r = baseR * (1 + intensity * Math.min(weight, 1) * multiplier);
     return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
   });
 
