@@ -49,7 +49,7 @@ export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = f
         { a: BL, h: 1.0, k: 6 },
       ];
 
-  const multiplier = isShortBurst ? 1.1 : 0.35;
+  const multiplier = isShortBurst ? 1.1 : 0.7;
 
   const pts = Array.from({ length: 90 }, (_, i) => {
     const angle = (i / 90) * 2 * Math.PI;

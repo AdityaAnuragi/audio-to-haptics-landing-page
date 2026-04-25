@@ -15,10 +15,43 @@ interface Props {
 
 export default function VideoExample({ src, title, credit, creditUrl, opts }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { analyze, loading, error, playbackBucketIntensity, playbackChainIsShortBurst } = useHaptics(videoRef, opts);
+  const { analyze, loading, error, ready, engine, playbackBucketIntensity, playbackChainIsShortBurst } = useHaptics(videoRef, opts);
   const playing = useStore(currentVideo);
 
   useEffect(() => { void analyze(src); }, []);
+
+  useEffect(() => {
+    if (!ready) return;
+    const vm = engine.vibrationMap;
+    const ci = engine.chainIntensity;
+    const cl = engine.chainLength;
+    const ce = engine.chainEndTime;
+    const trends = engine.trends;
+    const { shortChainBuckets, cycleMs, intensityFloor } = engine.opts;
+
+    console.group(`[${title}] chain map`);
+    let i = 0;
+    while (i < vm.length) {
+      if (!vm[i]) { i++; continue; }
+      const len      = cl[i];
+      const startT   = trends[i].startTime.toFixed(2);
+      const endT     = ce[i].toFixed(2);
+      const rawPct   = Math.round(ci[i] * 100);
+      const effI     = Math.max(ci[i], intensityFloor);
+      const effPct   = Math.round(effI * 100);
+      const isShort  = len < shortChainBuckets;
+      if (isShort) {
+        console.log(`${startT}s – ${endT}s  ${len}b  ${rawPct}%  →${effPct}% MAX`);
+      } else {
+        const onMs   = Math.round(cycleMs * effI);
+        const offMs  = cycleMs - onMs;
+        const cycles = Math.round(((ce[i] - trends[i].startTime) * 1000) / cycleMs);
+        console.log(`${startT}s – ${endT}s  ${len}b  ${rawPct}%  →${effPct}% [${onMs}, ~${offMs}] ×${cycles}`);
+      }
+      i += len;
+    }
+    console.groupEnd();
+  }, [ready]);
 
   // pause and reset this video when another one starts
   useEffect(() => {
@@ -49,7 +82,7 @@ export default function VideoExample({ src, title, credit, creditUrl, opts }: Pr
         style={{ width: '100%', maxWidth: '100%', display: 'block', background: '#000' }}
       />
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '48px 0', background: 'rgba(0,0,0,0.06)' }}>
-        <HapticBlob intensity={playbackBucketIntensity} isShortBurst={playbackChainIsShortBurst} />
+<HapticBlob intensity={playbackBucketIntensity} isShortBurst={playbackChainIsShortBurst} />
       </div>
       <div style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <span style={{ fontWeight: 700, fontSize: '0.9rem', letterSpacing: '0.03em' }}>{title}</span>
