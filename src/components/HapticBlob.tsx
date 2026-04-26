@@ -16,7 +16,7 @@ function norm(a: number): number {
   return ((a % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
 }
 
-// Catmull-Rom → cubic bezier: curve passes *through* every point with smooth tangents at each join
+// Catmull-Rom → cubic bezier
 function smoothPath(pts: { x: number; y: number }[]): string {
   const n = pts.length;
   let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
@@ -34,17 +34,22 @@ function smoothPath(pts: { x: number; y: number }[]): string {
   return d + ' Z';
 }
 
+let _uid = 0;
+
 export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = false }: Props) {
+  const uid = useRef(`hb${_uid++}`).current;
   const smoothedRef = useRef(0);
   const burstRef = useRef(false);
   const ripplesRef = useRef<Ripple[]>([]);
   const prevIntensityRef = useRef(0);
   const rippleIdRef = useRef(0);
+  const colorHRef = useRef(270);
+  const colorSRef = useRef(65);
+  const colorLRef = useRef(42);
+  const rainbowAngleRef = useRef(0);
 
   const prev = smoothedRef.current;
   smoothedRef.current += (intensity - prev) * (intensity > prev ? 0.4 : 0.15);
-
-  // only update shape when a chain is active — during silence the blob fades with the correct shape
   if (intensity > 0.1) burstRef.current = isShortBurst;
 
   const smoothed = smoothedRef.current;
@@ -54,36 +59,41 @@ export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = f
   const cy = size / 2;
   const baseR = size * 0.42;
 
-  // spawn a ripple when intensity goes from 0 → active (clean rising edge since library floors to 0 or ≥0.55)
+  // ripple on burst rising edge
   if (intensity > 0 && prevIntensityRef.current === 0 && isShortBurst) {
-    ripplesRef.current.push({ id: rippleIdRef.current++, r: baseR, opacity: 0.7 });
+    ripplesRef.current.push({ id: rippleIdRef.current++, r: baseR, opacity: 0.85 });
   }
   prevIntensityRef.current = intensity;
-
-  // advance and cull ripples each frame
   ripplesRef.current = ripplesRef.current
-    .map(rip => ({ ...rip, r: rip.r + 2, opacity: rip.opacity - 0.025 }))
-    .filter(rip => rip.opacity > 0);
+    .map(r => ({ ...r, r: r.r + 2.5, opacity: r.opacity - 0.022 }))
+    .filter(r => r.opacity > 0);
 
+  // color: idle=purple, burst=hot magenta, sustained=electric cyan
+  const tH = burst ? 300 : smoothed > 0.05 ? 188 : 270;
+  const tS = burst ? 100 : smoothed > 0.05 ? 90 : 65;
+  const tL = burst ? 60 : smoothed > 0.05 ? 50 : 42;
+  const cf = 0.1;
+  colorHRef.current += (tH - colorHRef.current) * cf;
+  colorSRef.current += (tS - colorSRef.current) * cf;
+  colorLRef.current += (tL - colorLRef.current) * cf;
+  const fill = `hsl(${colorHRef.current.toFixed(1)},${colorSRef.current.toFixed(1)}%,${colorLRef.current.toFixed(1)}%)`;
 
-  const TOP  = norm(-Math.PI / 2);
-  const EAR  = 42 * Math.PI / 180;
-  // 4 and 8 o'clock — more spread out, symmetric about the bottom vertical axis
-  const BR   = Math.PI / 6;       // bottom-right (4 o'clock)
-  const BL   = 5 * Math.PI / 6;   // bottom-left  (8 o'clock)
+  // rainbow stroke rotates, faster at high intensity
+  rainbowAngleRef.current = (rainbowAngleRef.current + 1.2 + smoothed * 6) % 360;
 
+  // glow strength scales with intensity
+  const glowDev = (smoothed * 14).toFixed(1);
+
+  // shape: burst=5-point star, sustained=smooth swelling circle
   const spikes = burst
-    ? [
-        { a: norm(TOP - EAR), h: 1.0,  k: 15 },
-        { a: norm(TOP + EAR), h: 1.0,  k: 15 },
-        { a: TOP,             h: 0.25, k: 15 },
-      ]
-    : [
-        { a: BR, h: 1.0, k: 6 },
-        { a: BL, h: 1.0, k: 6 },
-      ];
-
-  const multiplier = burst ? 1.1 : 0.7;
+    ? Array.from({ length: 5 }, (_, i) => ({
+        a: norm((i / 5) * 2 * Math.PI - Math.PI / 2),
+        h: 1.0,
+        k: 20,
+      }))
+    : [];
+  const multiplier = burst ? 1.3 : 0;
+  const sustainSwell = burst ? 0 : smoothed * 0.28;
 
   const pts = Array.from({ length: 90 }, (_, i) => {
     const angle = (i / 90) * 2 * Math.PI;
@@ -91,7 +101,7 @@ export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = f
       const diff = Math.min(Math.abs(angle - s.a), 2 * Math.PI - Math.abs(angle - s.a));
       return sum + s.h * Math.exp(-s.k * diff * diff);
     }, 0);
-    const r = baseR * (1 + smoothed * Math.min(weight, 1) * multiplier);
+    const r = baseR * (1 + smoothed * Math.min(weight, 1) * multiplier + sustainSwell);
     return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
   });
 
@@ -103,6 +113,30 @@ export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = f
       style={{ overflow: 'visible' }}
       aria-hidden="true"
     >
+      <defs>
+        <filter id={`${uid}-glow`} x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation={glowDev} result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <linearGradient
+          id={`${uid}-rainbow`}
+          gradientUnits="userSpaceOnUse"
+          x1={cx} y1={cy - baseR}
+          x2={cx} y2={cy + baseR}
+          gradientTransform={`rotate(${rainbowAngleRef.current.toFixed(1)}, ${cx}, ${cy})`}
+        >
+          <stop offset="0%"   stopColor="#ff0080" />
+          <stop offset="20%"  stopColor="#ff8c00" />
+          <stop offset="40%"  stopColor="#faff00" />
+          <stop offset="60%"  stopColor="#00ff88" />
+          <stop offset="80%"  stopColor="#00c3ff" />
+          <stop offset="100%" stopColor="#ff0080" />
+        </linearGradient>
+      </defs>
+
       {ripplesRef.current.map(rip => (
         <circle
           key={rip.id}
@@ -110,12 +144,20 @@ export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = f
           cy={cy}
           r={rip.r}
           fill="none"
-          stroke="#7c3aed"
-          strokeWidth={2.5}
+          stroke={fill}
+          strokeWidth={3}
           opacity={rip.opacity}
+          filter={`url(#${uid}-glow)`}
         />
       ))}
-      <path d={smoothPath(pts)} fill="#7c3aed" />
+
+      <path
+        d={smoothPath(pts)}
+        fill={fill}
+        stroke={`url(#${uid}-rainbow)`}
+        strokeWidth={Math.min(smoothed * 10, 5)}
+        filter={`url(#${uid}-glow)`}
+      />
     </svg>
   );
 }
