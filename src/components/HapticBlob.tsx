@@ -6,6 +6,12 @@ interface Props {
   isShortBurst?: boolean;
 }
 
+interface Ripple {
+  id: number;
+  r: number;
+  opacity: number;
+}
+
 function norm(a: number): number {
   return ((a % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
 }
@@ -31,6 +37,9 @@ function smoothPath(pts: { x: number; y: number }[]): string {
 export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = false }: Props) {
   const smoothedRef = useRef(0);
   const burstRef = useRef(false);
+  const ripplesRef = useRef<Ripple[]>([]);
+  const prevIntensityRef = useRef(0);
+  const rippleIdRef = useRef(0);
 
   const prev = smoothedRef.current;
   smoothedRef.current += (intensity - prev) * (intensity > prev ? 0.4 : 0.15);
@@ -44,6 +53,17 @@ export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = f
   const cx = size / 2;
   const cy = size / 2;
   const baseR = size * 0.42;
+
+  // spawn a ripple when intensity goes from 0 → active (clean rising edge since library floors to 0 or ≥0.55)
+  if (intensity > 0 && prevIntensityRef.current === 0 && isShortBurst) {
+    ripplesRef.current.push({ id: rippleIdRef.current++, r: baseR, opacity: 0.7 });
+  }
+  prevIntensityRef.current = intensity;
+
+  // advance and cull ripples each frame
+  ripplesRef.current = ripplesRef.current
+    .map(rip => ({ ...rip, r: rip.r + 2, opacity: rip.opacity - 0.025 }))
+    .filter(rip => rip.opacity > 0);
 
 
   const TOP  = norm(-Math.PI / 2);
@@ -83,6 +103,18 @@ export default function HapticBlob({ size = 160, intensity = 0, isShortBurst = f
       style={{ overflow: 'visible' }}
       aria-hidden="true"
     >
+      {ripplesRef.current.map(rip => (
+        <circle
+          key={rip.id}
+          cx={cx}
+          cy={cy}
+          r={rip.r}
+          fill="none"
+          stroke="#7c3aed"
+          strokeWidth={2.5}
+          opacity={rip.opacity}
+        />
+      ))}
       <path d={smoothPath(pts)} fill="#7c3aed" />
     </svg>
   );
