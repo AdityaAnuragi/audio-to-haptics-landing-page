@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PlaygroundComponent from '../components/Playground';
+---
+
+<Layout>
+
+  <div class="topbar">
+    <a href="/" class="back">← audio-to-haptics</a>
+    <span class="badge">v0.0.1</span>
+  </div>
+
+  <div class="page">
+    <h1>Playground</h1>
+    <p class="sub">See how the algorithm detects haptic moments in audio. Adjust the sliders — the visualization updates in real time. On Android Chrome, you'll feel the difference too.</p>
+
+    <PlaygroundComponent client:load />
+  </div>
+
+  <footer>
+    <p class="footer-links">
+      <a href="/">Home</a> &nbsp;·&nbsp;
+      <a href="/usage">Docs</a> &nbsp;·&nbsp;
+      <a href="#">GitHub</a>
+    </p>
+  </footer>
+
+</Layout>
+
+<style>
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .back {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  .back:hover { color: #111; }
+  .badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #f3f0ff;
+    color: #7c3aed;
+    border: 1px solid #ddd6fe;
+    border-radius: 20px;
+    padding: 3px 10px;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin: 0 0 12px;
+    color: #0f0f0f;
+  }
+  .sub {
+    font-size: 1rem;
+    color: #555;
+    margin: 0 0 48px;
+    line-height: 1.6;
+    max-width: 560px;
+  }
+
+  footer {
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .footer-links {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #888;
+  }
+  .footer-links a {
+    color: #888;
+    text-decoration: none;
+  }
+  .footer-links a:hover { color: #111; }
+</style>
