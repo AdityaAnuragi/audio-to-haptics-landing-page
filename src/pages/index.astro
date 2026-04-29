@@ -36,7 +36,7 @@ import PageHero from '../components/PageHero.astro';
 
     <div class="hero-ctas">
       <a href="#examples" class="btn-ghost">See it in action ↓</a>
-      <a href="/usage" class="btn-solid">Get started →</a>
+      <a href="/playground" class="btn-solid">Try it →</a>
     </div>
   </PageHero>
   </section>
@@ -99,20 +99,9 @@ import PageHero from '../components/PageHero.astro';
 
   <!-- CTA -->
   <div class="cta-strip">
-    <a href="/usage" class="btn-accent">View usage docs →</a>
+    <a href="/playground" class="btn-accent">Try it yourself →</a>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p class="footer-by">
-      Built by
-      <img src="https://github.com/AdityaAnuragi.png?size=32" class="avatar" alt="AdityaAnuragi" />
-      Aditya Anuragi
-    </p>
-    <p class="footer-links">
-      v0.0.1 &nbsp;·&nbsp; <a href="/playground">Playground</a> &nbsp;·&nbsp; <a href="#">GitHub</a> &nbsp;·&nbsp; <a href="#">LinkedIn</a>
-    </p>
-  </footer>
 
 </Layout>
 
@@ -246,24 +235,4 @@ import PageHero from '../components/PageHero.astro';
   .btn-accent:hover { background: rgba(255,255,255,0.55); border-color: rgba(255,255,255,0.8); }
   .btn-accent:active { background: rgba(255,255,255,0.3); }
 
-  /* ── FOOTER ───────────────────────────── */
-  footer {
-    border-top: 1px solid #eee;
-    padding: 32px 24px;
-    text-align: center;
-    font-size: 0.9rem;
-  }
-  footer p { margin: 0 0 8px; }
-  footer p:last-child { margin: 0; }
-  footer a { color: #555; text-decoration: none; }
-  footer a:hover { color: #111; }
-  .footer-by {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: #444;
-  }
-  .avatar { width: 26px; height: 26px; border-radius: 50%; }
-  .footer-links { color: #555; }
 </style>

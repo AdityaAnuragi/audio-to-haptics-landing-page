@@ -9,6 +9,16 @@
 	</head>
 	<body>
 		<slot />
+		<footer>
+			<p class="footer-by">
+				Built by
+				<img src="https://github.com/AdityaAnuragi.png?size=32" class="avatar" alt="AdityaAnuragi" />
+				Aditya Anuragi
+			</p>
+			<p class="footer-links">
+				v0.0.1 &nbsp;·&nbsp; <a href="https://github.com/AdityaAnuragi/audio-to-haptics" target="_blank" rel="noopener noreferrer">GitHub</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/aditya-anuragi/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+			</p>
+		</footer>
 	</body>
 </html>
 
@@ -34,4 +44,24 @@
 	}
 	a { color: inherit; }
 	pre, code { font-family: 'Cascadia Code', 'Fira Code', 'Courier New', monospace; }
+
+	footer {
+		border-top: 1px solid #eee;
+		padding: 32px 24px;
+		text-align: center;
+		font-size: 0.9rem;
+	}
+	footer p { margin: 0 0 8px; }
+	footer p:last-child { margin: 0; }
+	footer a { color: #555; text-decoration: none; }
+	footer a:hover { color: #111; }
+	.footer-by {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		color: #444;
+	}
+	.avatar { width: 26px; height: 26px; border-radius: 50%; }
+	.footer-links { color: #555; }
 </style>
