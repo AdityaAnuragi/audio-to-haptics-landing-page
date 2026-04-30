@@ -24,7 +24,7 @@ const SLIDERS = [
     key: 'shortChainBuckets' as const,
     label: 'Burst threshold',
     desc: 'Chains shorter than this → solid MAX pulse (red). Longer → PWM intensity (blue). Lower = more PWM, higher = more solid bursts.',
-    min: 1, max: 10, step: 1,
+    min: 1, max: 11, step: 1,
   },
   {
     key: 'intensityFloor' as const,
@@ -56,7 +56,7 @@ const PRESETS: { key: PresetKey; label: string; vals: SliderValues | null }[] = 
   { key: 'default',   label: 'Default',   vals: DEFAULT_VALS },
   { key: 'smooth',    label: 'Smooth',    vals: { spikeRatio: 1.1, sustainLowerBound: 0.5,  shortChainBuckets: 1, intensityFloor: 0.50, sustainUpperBound: 1.5 } },
   { key: 'punchy',    label: 'Punchy',    vals: { spikeRatio: 1.5, sustainLowerBound: 0.85, shortChainBuckets: 6, intensityFloor: 0.65, sustainUpperBound: 1.01 } },
-  { key: 'custom',    label: 'Custom',    vals: null },
+  { key: 'custom',    label: 'Custom',    vals: { spikeRatio: 2.0, sustainLowerBound: 0.75, shortChainBuckets: 6, intensityFloor: 0.60, sustainUpperBound: 1.5 } },
 ];
 
 interface VizData {
