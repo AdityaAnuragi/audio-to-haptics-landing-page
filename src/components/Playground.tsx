@@ -2,6 +2,9 @@ import { useRef, useEffect, useState, type ChangeEvent } from 'react';
 import { HapticEngine, DEFAULT_OPTIONS } from 'audio-to-haptics';
 import type { HapticOptions } from 'audio-to-haptics';
 
+// AWP_fixed.mp4
+// LFA.mp4
+// HeartBeatNew.mp4
 const DEFAULT_SRC = '/HeartBeatNew.mp4';
 
 const SLIDERS = [
@@ -39,7 +42,7 @@ const SLIDERS = [
 
 type SliderKey = typeof SLIDERS[number]['key'];
 type SliderValues = Pick<HapticOptions, SliderKey>;
-type PresetKey = 'default' | 'smooth' | 'punchy' | 'selective' | 'custom';
+type PresetKey = 'default' | 'smooth' | 'punchy' | 'custom';
 
 const DEFAULT_VALS: SliderValues = {
   spikeRatio: DEFAULT_OPTIONS.spikeRatio,
@@ -52,8 +55,7 @@ const DEFAULT_VALS: SliderValues = {
 const PRESETS: { key: PresetKey; label: string; vals: SliderValues | null }[] = [
   { key: 'default',   label: 'Default',   vals: DEFAULT_VALS },
   { key: 'smooth',    label: 'Smooth',    vals: { spikeRatio: 1.1, sustainLowerBound: 0.5,  shortChainBuckets: 1, intensityFloor: 0.50, sustainUpperBound: 1.5 } },
-  { key: 'punchy',    label: 'Punchy',    vals: { spikeRatio: 1.5, sustainLowerBound: 0.85, shortChainBuckets: 8, intensityFloor: 0.65, sustainUpperBound: 1.01 } },
-  { key: 'selective', label: 'Selective', vals: { spikeRatio: 2.8, sustainLowerBound: 0.9,  shortChainBuckets: 5, intensityFloor: 0.55, sustainUpperBound: 1.01 } },
+  { key: 'punchy',    label: 'Punchy',    vals: { spikeRatio: 1.5, sustainLowerBound: 0.85, shortChainBuckets: 6, intensityFloor: 0.65, sustainUpperBound: 1.01 } },
   { key: 'custom',    label: 'Custom',    vals: null },
 ];
 
