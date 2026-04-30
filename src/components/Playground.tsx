@@ -29,10 +29,33 @@ const SLIDERS = [
     desc: 'Minimum duty cycle while vibrating — prevents motor stall on quiet audio. Lower = weaker minimum, higher = stronger minimum buzz.',
     min: 0.3, max: 0.9, step: 0.05,
   },
+  {
+    key: 'sustainUpperBound' as const,
+    label: 'Sustain rise tolerance',
+    desc: 'How much a chain can rise and still sustain — higher = longer chains on building audio, lower = only decaying tails sustain.',
+    min: 1.0, max: 2.0, step: 0.1,
+  },
 ] as const;
 
 type SliderKey = typeof SLIDERS[number]['key'];
 type SliderValues = Pick<HapticOptions, SliderKey>;
+type PresetKey = 'default' | 'smooth' | 'punchy' | 'selective' | 'custom';
+
+const DEFAULT_VALS: SliderValues = {
+  spikeRatio: DEFAULT_OPTIONS.spikeRatio,
+  sustainLowerBound: DEFAULT_OPTIONS.sustainLowerBound,
+  shortChainBuckets: 6,
+  intensityFloor: DEFAULT_OPTIONS.intensityFloor,
+  sustainUpperBound: DEFAULT_OPTIONS.sustainUpperBound,
+};
+
+const PRESETS: { key: PresetKey; label: string; vals: SliderValues | null }[] = [
+  { key: 'default',   label: 'Default',   vals: DEFAULT_VALS },
+  { key: 'smooth',    label: 'Smooth',    vals: { spikeRatio: 1.1, sustainLowerBound: 0.5,  shortChainBuckets: 1, intensityFloor: 0.50, sustainUpperBound: 1.5 } },
+  { key: 'punchy',    label: 'Punchy',    vals: { spikeRatio: 1.5, sustainLowerBound: 0.85, shortChainBuckets: 8, intensityFloor: 0.65, sustainUpperBound: 1.01 } },
+  { key: 'selective', label: 'Selective', vals: { spikeRatio: 2.8, sustainLowerBound: 0.9,  shortChainBuckets: 5, intensityFloor: 0.55, sustainUpperBound: 1.01 } },
+  { key: 'custom',    label: 'Custom',    vals: null },
+];
 
 interface VizData {
   trends: { max: number }[];
@@ -51,12 +74,8 @@ export default function Playground() {
   const playheadRef = useRef(0);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [vals, setVals] = useState<SliderValues>({
-    spikeRatio: DEFAULT_OPTIONS.spikeRatio,
-    sustainLowerBound: DEFAULT_OPTIONS.sustainLowerBound,
-    shortChainBuckets: 6, // heartbeat-tuned default
-    intensityFloor: DEFAULT_OPTIONS.intensityFloor,
-  });
+  const [vals, setVals] = useState<SliderValues>(DEFAULT_VALS);
+  const [preset, setPreset] = useState<PresetKey>('default');
   const [videoSrc, setVideoSrc] = useState(DEFAULT_SRC);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [errorMsg, setErrorMsg] = useState('');
@@ -174,7 +193,20 @@ export default function Playground() {
     return () => ro.disconnect();
   }, []);
 
+  function handlePreset(p: typeof PRESETS[number]) {
+    setPreset(p.key);
+    if (!p.vals) return;
+    const newVals = p.vals;
+    setVals(newVals);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(async () => {
+      if (!cachedBuffer.current) return;
+      await runAnalysis(cachedBuffer.current.slice(0), newVals);
+    }, 300);
+  }
+
   function handleSlider(key: SliderKey, raw: string) {
+    setPreset('custom');
     const value = parseFloat(raw);
     const newVals = { ...vals, [key]: value };
     setVals(newVals);
@@ -228,6 +260,26 @@ export default function Playground() {
           <span style={{ width: 10, height: 10, borderRadius: 2, background: 'rgba(59,130,246,0.9)', display: 'inline-block', flexShrink: 0 }} />
           Sustained
         </span>
+      </div>
+
+      {/* Presets */}
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
+        {PRESETS.map(p => (
+          <button
+            key={p.key}
+            onClick={() => handlePreset(p)}
+            style={{
+              padding: '6px 14px',
+              borderRadius: 20,
+              border: preset === p.key ? '1.5px solid #7c3aed' : '1.5px solid #ddd',
+              background: preset === p.key ? '#7c3aed' : '#fff',
+              color: preset === p.key ? '#fff' : '#555',
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >{p.label}</button>
+        ))}
       </div>
 
       {/* Sliders */}
