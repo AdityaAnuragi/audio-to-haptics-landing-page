@@ -99,22 +99,18 @@ import PageHero from '../components/PageHero.astro';
 
   <!-- FEATURES -->
   <section class="features">
-    <div class="feature-card">
+    <div class="feature-card" style="grid-column: 1 / -1;">
       <p class="feature-title">Synced to what you hear</p>
       <p class="feature-body">Haptic motors have startup latency — without compensation, vibration fires before the sound reaches your ears. The library calculates this window on every play event and suppresses haptics until audio and vibration are in sync.</p>
       <!-- <a href="" class="feature-link">Blog post →</a> -->
     </div>
     <div class="feature-card">
-      <p class="feature-title">Edge detection, not fixed thresholds</p>
-      <p class="feature-body">Each beat is compared to recent audio, not a fixed level. Works on any audio — quiet or loud.</p>
+      <p class="feature-title">Fully algorithmic</p>
+      <p class="feature-body">Hand-authored haptics are more precise — but time-consuming to write. This derives them directly from the audio. Not perfect, but instant.</p>
     </div>
     <div class="feature-card">
       <p class="feature-title">Attaches to any media element</p>
-      <p class="feature-body">One call. Syncs to <code>&lt;audio&gt;</code> or <code>&lt;video&gt;</code> via requestAnimationFrame. Seek, pause, replay — all handled.</p>
-    </div>
-    <div class="feature-card">
-      <p class="feature-title">PWM intensity simulation</p>
-      <p class="feature-body">The Vibration API is binary. We simulate partial amplitude via pulse-width modulation — soft hits feel soft.</p>
+      <p class="feature-body">One call. Syncs to <code>&lt;audio&gt;</code> or <code>&lt;video&gt;</code> automatically. Seek, pause, replay — all handled.</p>
     </div>
   </section>
 
