@@ -11,13 +11,13 @@ const SLIDERS = [
   {
     key: 'spikeRatio' as const,
     label: 'Spike sensitivity',
-    desc: 'Threshold vs. recent audio — lower = more haptics, higher = strong spikes only.',
+    desc: 'A moment vibrates if it\'s at least this many times as loud as past audio. If past audio averaged 10, at 1.2 anything above 10 × 1.2 = 12 triggers.',
     min: 1.0, max: 3.0, step: 0.1,
   },
   {
     key: 'sustainLowerBound' as const,
     label: 'Sustain decay tolerance',
-    desc: 'Decay tolerance — lower = longer tails, higher = chains cut off sooner.',
+    desc: 'Controls how much a sound can fade before vibration stops. At 0.75, if the last peak was 10, the next must be above 10 × 0.75 = 7.5 to keep vibrating — and the one after that above 7.5 × 0.75 = 5.6, and so on.',
     min: 0.5, max: 1.0, step: 0.05,
   },
   {
@@ -29,13 +29,13 @@ const SLIDERS = [
   {
     key: 'intensityFloor' as const,
     label: 'Intensity floor',
-    desc: 'Minimum duty cycle while vibrating — prevents motor stall on quiet audio. Lower = weaker minimum, higher = stronger minimum buzz.',
+    desc: 'The minimum strength any vibration can fire at. At 0.55, a moment that would naturally vibrate at 0.3 gets raised to 0.55 instead.',
     min: 0.3, max: 0.9, step: 0.05,
   },
   {
     key: 'sustainUpperBound' as const,
     label: 'Sustain rise tolerance',
-    desc: 'How much a chain can rise and still sustain — higher = longer chains on building audio, lower = only decaying tails sustain.',
+    desc: 'Controls how much a sound can rise before the sustain chain breaks. At 1.5, if the last peak was 10, anything at 15 or below sustains — and the one after that at 15 × 1.5 = 22.5 or below, and so on.',
     min: 1.0, max: 2.0, step: 0.1,
   },
 ] as const;
