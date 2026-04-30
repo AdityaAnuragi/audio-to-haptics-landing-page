@@ -97,6 +97,27 @@ import PageHero from '../components/PageHero.astro';
     />
   </section>
 
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="feature-card">
+      <p class="feature-title">Synced to what you hear</p>
+      <p class="feature-body">Haptic motors have startup latency — without compensation, vibration fires before the sound reaches your ears. The library calculates this window on every play event and suppresses haptics until audio and vibration are in sync.</p>
+      <!-- <a href="" class="feature-link">Blog post →</a> -->
+    </div>
+    <div class="feature-card">
+      <p class="feature-title">Edge detection, not fixed thresholds</p>
+      <p class="feature-body">Each beat is compared to recent audio, not a fixed level. Works on any audio — quiet or loud.</p>
+    </div>
+    <div class="feature-card">
+      <p class="feature-title">Attaches to any media element</p>
+      <p class="feature-body">One call. Syncs to <code>&lt;audio&gt;</code> or <code>&lt;video&gt;</code> via requestAnimationFrame. Seek, pause, replay — all handled.</p>
+    </div>
+    <div class="feature-card">
+      <p class="feature-title">PWM intensity simulation</p>
+      <p class="feature-body">The Vibration API is binary. We simulate partial amplitude via pulse-width modulation — soft hits feel soft.</p>
+    </div>
+  </section>
+
   <!-- CTA -->
   <div class="cta-strip">
     <a href="/playground" class="btn-accent">Try it yourself →</a>
@@ -212,6 +233,46 @@ import PageHero from '../components/PageHero.astro';
     gap: 32px;
   }
   .group-placeholder { color: #333; font-size: 0.95rem; margin: 0; }
+
+  /* ── FEATURES ────────────────────────── */
+  .features {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 540px) {
+    .features { grid-template-columns: 1fr; }
+  }
+  .feature-card {
+    background: rgba(255,255,255,0.40);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 12px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  }
+  .feature-title {
+    margin: 0 0 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #111;
+  }
+  .feature-body {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #444;
+    line-height: 1.55;
+  }
+  .feature-body code {
+    font-size: 0.8rem;
+    background: rgba(0,0,0,0.07);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
 
   /* ── CTA STRIP ────────────────────────── */
   .cta-strip {
