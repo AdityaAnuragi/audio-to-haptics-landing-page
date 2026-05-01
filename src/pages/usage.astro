@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import CodeTabs from '../components/CodeTabs';
+import CodeTabs from '../components/CodeTabs.astro';
 import {
   BASIC_REACT, BASIC_VANILLA,
   FILE_REACT, FILE_VANILLA,
@@ -28,40 +28,41 @@ import {
 
     <section class="block">
       <h2>Quick start</h2>
-      <CodeTabs client:load react={BASIC_REACT} vanilla={BASIC_VANILLA} />
+      <p class="section-desc">Analyze an audio or video file once — the library pre-computes when and how hard to vibrate. After that, just play the media and haptics fire automatically in sync, driven by a <code>requestAnimationFrame</code> loop.</p>
+      <CodeTabs react={BASIC_REACT} vanilla={BASIC_VANILLA} />
     </section>
 
     <section class="block">
-      <h2>Examples</h2>
+      <h2>Examples <span class="examples-note">(snippets only — combine with the quick start above for full working code)</span></h2>
 
       <div class="recipe">
         <h3>URL or file input</h3>
         <p class="recipe-desc">Both paths use the same hook — <code>analyze()</code> takes a URL, <code>analyzeBuffer()</code> takes raw bytes from a file input or drag-and-drop.</p>
-        <CodeTabs client:load react={FILE_REACT} vanilla={FILE_VANILLA} />
+        <CodeTabs react={FILE_REACT} vanilla={FILE_VANILLA} />
       </div>
 
       <div class="recipe">
         <h3>Works with video too</h3>
         <p class="recipe-desc">Pass a <code>videoRef</code> instead of <code>audioRef</code> — the hook and engine attach to whichever media element you give them.</p>
-        <CodeTabs client:load react={VIDEO_REACT} vanilla={VIDEO_VANILLA} />
+        <CodeTabs react={VIDEO_REACT} vanilla={VIDEO_VANILLA} />
       </div>
 
       <div class="recipe">
         <h3>Mute and unmute</h3>
         <p class="recipe-desc">Suppress haptics without stopping playback or losing the analysis. One flag, instant toggle.</p>
-        <CodeTabs client:load react={MUTE_REACT} vanilla={MUTE_VANILLA} />
+        <CodeTabs react={MUTE_REACT} vanilla={MUTE_VANILLA} />
       </div>
 
       <div class="recipe">
         <h3>Drive a visual</h3>
         <p class="recipe-desc">The library exposes per-frame amplitude and chain type so you can sync any visual — SVG, canvas, CSS — to the same data driving the haptics.</p>
-        <CodeTabs client:load react={VISUAL_REACT} vanilla={VISUAL_VANILLA} />
+        <CodeTabs react={VISUAL_REACT} vanilla={VISUAL_VANILLA} />
       </div>
 
       <div class="recipe">
         <h3>Custom options</h3>
         <p class="recipe-desc">Tune how the algorithm detects haptic events. Try them live in the <a href="/playground">playground →</a></p>
-        <CodeTabs client:load react={OPTS_REACT} vanilla={OPTS_VANILLA} />
+        <CodeTabs react={OPTS_REACT} vanilla={OPTS_VANILLA} />
       </div>
 
     </section>
@@ -84,7 +85,7 @@ import {
     border-bottom: 1px solid #eee;
   }
   .back {
-    color: #555;
+    color: #333;
     text-decoration: none;
     font-size: 0.875rem;
     font-weight: 500;
@@ -122,6 +123,13 @@ import {
     color: #7c3aed;
     margin: 0 0 16px;
   }
+  .examples-note {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #333;
+  }
 
   .code-block {
     background: #0f0f0f;
@@ -144,9 +152,24 @@ import {
     margin: 0 0 6px;
   }
 
+  .section-desc {
+    font-size: 0.875rem;
+    color: #333;
+    margin: 0 0 20px;
+    line-height: 1.6;
+  }
+  .section-desc code {
+    font-family: monospace;
+    font-size: 0.85em;
+    background: rgba(124, 58, 237, 0.08);
+    color: #6d28d9;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
   .recipe-desc {
     font-size: 0.875rem;
-    color: #555;
+    color: #333;
     margin: 0 0 14px;
     line-height: 1.6;
   }
@@ -167,7 +190,7 @@ import {
 
   .support-note {
     font-size: 0.875rem;
-    color: #555;
+    color: #333;
     line-height: 1.6;
     margin: 0;
   }

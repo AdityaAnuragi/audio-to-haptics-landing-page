@@ -1,0 +1,111 @@
+---
+import { Code } from 'astro:components';
+interface Props { react: string; vanilla: string; }
+const { react, vanilla } = Astro.props;
+---
+
+<div class="codetabs">
+  <div class="bar">
+    <div class="tabs">
+      <button class="tab active" data-tab="react">React</button>
+      <button class="tab" data-tab="vanilla">Vanilla JS</button>
+    </div>
+    <button class="copy">Copy</button>
+  </div>
+  <div class="pane active" data-pane="react">
+    <Code code={react} lang="tsx" theme="one-dark-pro" />
+  </div>
+  <div class="pane hidden" data-pane="vanilla">
+    <Code code={vanilla} lang="ts" theme="one-dark-pro" />
+  </div>
+</div>
+
+<style>
+  .codetabs {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .bar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    background: #21252b;
+    padding: 10px 14px 0;
+  }
+
+  .tabs { display: flex; gap: 2px; }
+
+  .tab {
+    padding: 6px 18px;
+    border: none;
+    border-radius: 6px 6px 0 0;
+    background: transparent;
+    color: #636d83;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.15s;
+  }
+  .tab.active {
+    background: #282c34;
+    color: #abb2bf;
+  }
+  .tab:not(.active):hover { color: #abb2bf; }
+
+  .copy {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #636d83;
+    padding: 4px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 500;
+    font-family: inherit;
+    margin-bottom: 6px;
+    transition: color 0.15s;
+  }
+  .copy:hover { color: #abb2bf; }
+
+  .pane.hidden { display: none; }
+
+  .pane :global(pre) {
+    margin: 0 !important;
+    border-radius: 0 !important;
+    padding: 24px 28px !important;
+    font-size: 0.875rem !important;
+    line-height: 1.8 !important;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.codetabs').forEach(el => {
+    const tabs = el.querySelectorAll<HTMLButtonElement>('.tab');
+    const panes = el.querySelectorAll<HTMLElement>('.pane');
+    const copyBtn = el.querySelector<HTMLButtonElement>('.copy');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        tabs.forEach(t => t.classList.toggle('active', t === tab));
+        panes.forEach(p => {
+          const active = p.dataset.pane === target;
+          p.classList.toggle('active', active);
+          p.classList.toggle('hidden', !active);
+        });
+      });
+    });
+
+    copyBtn?.addEventListener('click', () => {
+      const text = el.querySelector('.pane.active code')?.textContent ?? '';
+      void navigator.clipboard.writeText(text).then(() => {
+        if (!copyBtn) return;
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
+      });
+    });
+  });
+</script>
