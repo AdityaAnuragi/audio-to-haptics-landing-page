@@ -1,6 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import UsageTabs from '../components/UsageTabs';
+import CodeTabs from '../components/CodeTabs';
+import {
+  BASIC_REACT, BASIC_VANILLA,
+  FILE_REACT, FILE_VANILLA,
+  VIDEO_REACT, VIDEO_VANILLA,
+  MUTE_REACT, MUTE_VANILLA,
+  VISUAL_REACT, VISUAL_VANILLA,
+  OPTS_REACT, OPTS_VANILLA,
+} from '../data/snippets';
 ---
 
 <Layout>
@@ -11,7 +19,6 @@ import UsageTabs from '../components/UsageTabs';
   </div>
 
   <div class="page">
-
     <h1>Usage</h1>
 
     <section class="block">
@@ -20,8 +27,48 @@ import UsageTabs from '../components/UsageTabs';
     </section>
 
     <section class="block">
-      <h2>API</h2>
-      <UsageTabs client:load />
+      <h2>Quick start</h2>
+      <CodeTabs client:load react={BASIC_REACT} vanilla={BASIC_VANILLA} />
+    </section>
+
+    <section class="block">
+      <h2>Examples</h2>
+
+      <div class="recipe">
+        <h3>URL or file input</h3>
+        <p class="recipe-desc">Both paths use the same hook — <code>analyze()</code> takes a URL, <code>analyzeBuffer()</code> takes raw bytes from a file input or drag-and-drop.</p>
+        <CodeTabs client:load react={FILE_REACT} vanilla={FILE_VANILLA} />
+      </div>
+
+      <div class="recipe">
+        <h3>Works with video too</h3>
+        <p class="recipe-desc">Pass a <code>videoRef</code> instead of <code>audioRef</code> — the hook and engine attach to whichever media element you give them.</p>
+        <CodeTabs client:load react={VIDEO_REACT} vanilla={VIDEO_VANILLA} />
+      </div>
+
+      <div class="recipe">
+        <h3>Mute and unmute</h3>
+        <p class="recipe-desc">Suppress haptics without stopping playback or losing the analysis. One flag, instant toggle.</p>
+        <CodeTabs client:load react={MUTE_REACT} vanilla={MUTE_VANILLA} />
+      </div>
+
+      <div class="recipe">
+        <h3>Drive a visual</h3>
+        <p class="recipe-desc">The library exposes per-frame amplitude and chain type so you can sync any visual — SVG, canvas, CSS — to the same data driving the haptics.</p>
+        <CodeTabs client:load react={VISUAL_REACT} vanilla={VISUAL_VANILLA} />
+      </div>
+
+      <div class="recipe">
+        <h3>Custom options</h3>
+        <p class="recipe-desc">Tune how the algorithm detects haptic events. Try them live in the <a href="/playground">playground →</a></p>
+        <CodeTabs client:load react={OPTS_REACT} vanilla={OPTS_VANILLA} />
+      </div>
+
+    </section>
+
+    <section class="block">
+      <h2>Browser support</h2>
+      <p class="support-note">Haptics require the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Vibration_API" target="_blank" rel="noopener">Web Vibration API</a> — currently Android Chrome only. On desktop or iOS the library loads and analyzes normally, vibration calls are silently skipped.</p>
     </section>
 
   </div>
@@ -65,15 +112,17 @@ import UsageTabs from '../components/UsageTabs';
     color: #0f0f0f;
   }
 
-  .block { margin-bottom: 40px; }
+  .block { margin-bottom: 48px; }
+
   h2 {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #7c3aed;
-    margin: 0 0 12px;
+    margin: 0 0 16px;
   }
+
   .code-block {
     background: #0f0f0f;
     color: #e8e8e8;
@@ -82,4 +131,50 @@ import UsageTabs from '../components/UsageTabs';
     font-size: 0.9rem;
     margin: 0;
   }
+
+  .recipe {
+    margin-bottom: 40px;
+  }
+  .recipe:last-child { margin-bottom: 0; }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f0f0f;
+    margin: 0 0 6px;
+  }
+
+  .recipe-desc {
+    font-size: 0.875rem;
+    color: #555;
+    margin: 0 0 14px;
+    line-height: 1.6;
+  }
+  .recipe-desc code {
+    font-family: monospace;
+    font-size: 0.85em;
+    background: rgba(124, 58, 237, 0.08);
+    color: #6d28d9;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .recipe-desc a {
+    color: #7c3aed;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .recipe-desc a:hover { text-decoration: underline; }
+
+  .support-note {
+    font-size: 0.875rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .support-note a {
+    color: #7c3aed;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .support-note a:hover { text-decoration: underline; }
 </style>

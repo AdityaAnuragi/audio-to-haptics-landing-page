@@ -2,38 +2,16 @@ import { useState, type CSSProperties } from 'react';
 import './UsageTabs.css';
 
 type Tab = 'react' | 'vanilla';
-
-const SNIPPETS: Record<Tab, string> = {
-  react: [
-    "import { useHaptics } from 'audio-to-haptics/react';",
-    '',
-    'const audioRef = useRef<HTMLAudioElement>(null);',
-    'const { analyze, ready, loading, error } = useHaptics(audioRef);',
-    '',
-    '// <audio ref={audioRef} controls />',
-    "// analyze('your-audio-url.mp3')",
-  ].join('\n'),
-
-  vanilla: [
-    "import { HapticEngine } from 'audio-to-haptics';",
-    '',
-    'const engine = new HapticEngine();',
-    'await engine.analyze(url);',
-    'engine.attach(audioElement);',
-    '',
-    '// engine.detach()      — stop haptics, remove listeners',
-    '// engine.muted = true  — suppress vibration without stopping',
-  ].join('\n'),
-};
-
 const ACCENT = '#7c3aed';
 
-export default function UsageTabs() {
+export default function CodeTabs({ react, vanilla }: { react: string; vanilla: string }) {
   const [tab, setTab] = useState<Tab>('react');
   const [copied, setCopied] = useState(false);
 
+  const snippets: Record<Tab, string> = { react, vanilla };
+
   const copy = () => {
-    void navigator.clipboard.writeText(SNIPPETS[tab]);
+    void navigator.clipboard.writeText(snippets[tab]);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -67,7 +45,7 @@ export default function UsageTabs() {
           margin: 0,
           overflowX: 'auto',
         }}>
-          <code>{SNIPPETS[tab]}</code>
+          <code>{snippets[tab]}</code>
         </pre>
         <button
           className="usage-copy-btn"
