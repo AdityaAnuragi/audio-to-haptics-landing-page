@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CodeTabs from '../components/CodeTabs.astro';
+import DiagramPipeline from '../components/DiagramPipeline.astro';
+import DiagramSpike from '../components/DiagramSpike.astro';
+import DiagramPWM from '../components/DiagramPWM.astro';
 import {
   BASIC_REACT, BASIC_VANILLA,
   FILE_REACT, FILE_VANILLA,
@@ -21,18 +24,18 @@ import {
   <div class="page">
     <h1>Usage</h1>
 
-    <section class="block">
+    <section class="block" id="install">
       <h2>Install</h2>
       <pre class="code-block"><code>npm install audio-to-haptics</code></pre>
     </section>
 
-    <section class="block">
+    <section class="block" id="quick-start">
       <h2>Quick start</h2>
       <p class="section-desc">Analyze an audio or video file once — the library pre-computes when and how hard to vibrate. After that, just play the media and haptics fire automatically in sync, driven by a <code>requestAnimationFrame</code> loop.</p>
       <CodeTabs react={BASIC_REACT} vanilla={BASIC_VANILLA} />
     </section>
 
-    <section class="block">
+    <section class="block" id="examples">
       <h2>Examples <span class="examples-note">(snippets only — combine with the quick start above for full working code)</span></h2>
 
       <div class="recipe">
@@ -55,7 +58,7 @@ import {
 
       <div class="recipe">
         <h3>Drive a visual</h3>
-        <p class="recipe-desc">The library exposes per-frame amplitude and chain type so you can sync any visual — SVG, canvas, CSS — to the same data driving the haptics.</p>
+        <p class="recipe-desc">The library exposes per-frame amplitude and chain type so you can sync any visual — SVG, canvas, CSS — to the same data driving the haptics. The visualiser on the <a href="/#examples">landing page</a> is built with exactly this.</p>
         <CodeTabs react={VISUAL_REACT} vanilla={VISUAL_VANILLA} />
       </div>
 
@@ -67,7 +70,27 @@ import {
 
     </section>
 
-    <section class="block">
+    <section class="block" id="how-it-works">
+      <h2>How it works</h2>
+
+      <div class="how-item">
+        <DiagramPipeline />
+        <p class="how-desc">Call <code>analyze()</code> once before playback. The library fetches and decodes the audio, splits it into ~60ms buckets, and pre-computes exactly when and how hard to vibrate. Nothing is recalculated during playback — it's all ready ahead of time.</p>
+      </div>
+
+      <div class="how-item">
+        <DiagramSpike />
+        <p class="how-desc">Each bucket is compared to the average of the buckets before it. If the current amplitude is significantly louder than the recent past, it triggers a vibration. This is edge detection — a kick drum stands out locally even inside a wall of loud music.</p>
+      </div>
+
+      <div class="how-item">
+        <DiagramPWM />
+        <p class="how-desc">Short chains (a kick, a gunshot, a heartbeat) fire as a single solid pulse — just impact. Longer chains use PWM: rapid on/off cycles where the duty cycle represents intensity. The motor's inertia smooths the pulses into a perceived partial amplitude.</p>
+      </div>
+
+    </section>
+
+    <section class="block" id="browser-support">
       <h2>Browser support</h2>
       <p class="support-note">Haptics require the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Vibration_API" target="_blank" rel="noopener">Web Vibration API</a> — currently Android Chrome only. On desktop or iOS the library loads and analyzes normally, vibration calls are silently skipped.</p>
     </section>
@@ -114,6 +137,10 @@ import {
   }
 
   .block { margin-bottom: 48px; }
+  .block + .block {
+    border-top: 1px solid rgba(0,0,0,0.07);
+    padding-top: 48px;
+  }
 
   h2 {
     font-size: 0.75rem;
@@ -187,6 +214,23 @@ import {
     font-weight: 500;
   }
   .recipe-desc a:hover { text-decoration: underline; }
+
+  .how-item { margin-bottom: 32px; }
+  .how-item:last-child { margin-bottom: 0; }
+  .how-desc {
+    font-size: 0.875rem;
+    color: #333;
+    line-height: 1.6;
+    margin: 14px 0 0;
+  }
+  .how-desc code {
+    font-family: monospace;
+    font-size: 0.85em;
+    background: rgba(124, 58, 237, 0.08);
+    color: #6d28d9;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
 
   .support-note {
     font-size: 0.875rem;

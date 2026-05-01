@@ -1,0 +1,35 @@
+<div class="diagram">
+  <svg viewBox="0 0 600 80" width="100%" aria-hidden="true">
+    <rect x="0" y="10" width="110" height="50" rx="6" fill="rgba(124,58,237,0.07)" stroke="#c4b5fd" stroke-width="1.5"/>
+    <text x="55" y="31" text-anchor="middle" font-size="11" font-weight="600" fill="#111" font-family="system-ui,sans-serif">Fetch &amp; decode</text>
+    <text x="55" y="47" text-anchor="middle" font-size="9.5" fill="#666" font-family="system-ui,sans-serif">audio / video</text>
+
+    <text x="136" y="39" text-anchor="middle" font-size="18" fill="#7c3aed" font-family="system-ui,sans-serif">→</text>
+
+    <rect x="163" y="10" width="110" height="50" rx="6" fill="rgba(124,58,237,0.07)" stroke="#c4b5fd" stroke-width="1.5"/>
+    <text x="218" y="31" text-anchor="middle" font-size="11" font-weight="600" fill="#111" font-family="system-ui,sans-serif">Split into buckets</text>
+    <text x="218" y="47" text-anchor="middle" font-size="9.5" fill="#666" font-family="system-ui,sans-serif">~60ms each</text>
+
+    <text x="299" y="39" text-anchor="middle" font-size="18" fill="#7c3aed" font-family="system-ui,sans-serif">→</text>
+
+    <rect x="326" y="10" width="110" height="50" rx="6" fill="rgba(124,58,237,0.07)" stroke="#c4b5fd" stroke-width="1.5"/>
+    <text x="381" y="31" text-anchor="middle" font-size="11" font-weight="600" fill="#111" font-family="system-ui,sans-serif">Detect spikes</text>
+    <text x="381" y="47" text-anchor="middle" font-size="9.5" fill="#666" font-family="system-ui,sans-serif">vs past average</text>
+
+    <text x="462" y="39" text-anchor="middle" font-size="18" fill="#7c3aed" font-family="system-ui,sans-serif">→</text>
+
+    <rect x="489" y="10" width="110" height="50" rx="6" fill="rgba(124,58,237,0.15)" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="544" y="31" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed" font-family="system-ui,sans-serif">navigator</text>
+    <text x="544" y="47" text-anchor="middle" font-size="10" fill="#7c3aed" font-family="monospace,system-ui">.vibrate()</text>
+  </svg>
+</div>
+
+<style>
+  .diagram {
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 10px;
+    padding: 20px 16px;
+    margin-bottom: 12px;
+  }
+</style>

@@ -1,0 +1,35 @@
+<div class="diagram">
+  <svg viewBox="0 0 360 90" width="100%" aria-hidden="true">
+    <!-- Short burst -->
+    <text x="90" y="18" text-anchor="middle" font-size="11" font-weight="600" fill="#111" font-family="system-ui,sans-serif">Short burst</text>
+    <rect x="30" y="28" width="120" height="40" rx="3" fill="#7c3aed"/>
+    <text x="90" y="82" text-anchor="middle" font-size="9.5" fill="#555" font-family="system-ui,sans-serif">solid pulse</text>
+
+    <!-- Divider -->
+    <line x1="180" y1="10" x2="180" y2="78" stroke="#e5e7eb" stroke-width="1.5"/>
+
+    <!-- Sustained -->
+    <text x="270" y="18" text-anchor="middle" font-size="11" font-weight="600" fill="#111" font-family="system-ui,sans-serif">Sustained</text>
+    <!-- on/off blocks: 16px on, 10px off, repeat x5 = 130px total, centered in 120px space starting x=210 -->
+    <rect x="210" y="28" width="16" height="40" rx="2" fill="#7c3aed"/>
+    <rect x="226" y="28" width="10" height="40" rx="1" fill="rgba(124,58,237,0.1)" stroke="#c4b5fd" stroke-width="1"/>
+    <rect x="236" y="28" width="16" height="40" rx="2" fill="#7c3aed"/>
+    <rect x="252" y="28" width="10" height="40" rx="1" fill="rgba(124,58,237,0.1)" stroke="#c4b5fd" stroke-width="1"/>
+    <rect x="262" y="28" width="16" height="40" rx="2" fill="#7c3aed"/>
+    <rect x="278" y="28" width="10" height="40" rx="1" fill="rgba(124,58,237,0.1)" stroke="#c4b5fd" stroke-width="1"/>
+    <rect x="288" y="28" width="16" height="40" rx="2" fill="#7c3aed"/>
+    <rect x="304" y="28" width="10" height="40" rx="1" fill="rgba(124,58,237,0.1)" stroke="#c4b5fd" stroke-width="1"/>
+    <rect x="314" y="28" width="16" height="40" rx="2" fill="#7c3aed"/>
+    <text x="270" y="82" text-anchor="middle" font-size="9.5" fill="#555" font-family="system-ui,sans-serif">PWM — duty cycle = intensity</text>
+  </svg>
+</div>
+
+<style>
+  .diagram {
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 10px;
+    padding: 20px 16px;
+    margin-bottom: 12px;
+  }
+</style>
