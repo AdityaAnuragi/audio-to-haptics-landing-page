@@ -116,6 +116,7 @@ import PageHero from '../components/PageHero.astro';
 
   <!-- CTA -->
   <div class="cta-strip">
+    <p class="attribution">Inspired by <a href="https://haptics.lochie.me/" target="_blank" rel="noopener">web-haptics</a> by Lochie</p>
     <a href="/playground" class="btn-accent">Try it yourself →</a>
   </div>
 
@@ -275,6 +276,13 @@ import PageHero from '../components/PageHero.astro';
     padding: 48px 24px;
     text-align: center;
   }
+  .attribution {
+    font-size: 0.8rem;
+    color: #555;
+    margin: 0 0 20px;
+  }
+  .attribution a { color: #555; text-decoration: underline; }
+  .attribution a:hover { color: #222; }
   .btn-accent {
     text-decoration: none;
     padding: 13px 28px;
