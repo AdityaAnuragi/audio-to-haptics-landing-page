@@ -78,6 +78,21 @@ const { react, vanilla } = Astro.props;
     padding: 24px 28px !important;
     font-size: 0.875rem !important;
     line-height: 1.8 !important;
+    scrollbar-color: rgba(255,255,255,0.15) transparent;
+    scrollbar-width: thin;
+  }
+  .pane :global(pre::-webkit-scrollbar) {
+    height: 6px;
+  }
+  .pane :global(pre::-webkit-scrollbar-track) {
+    background: transparent;
+  }
+  .pane :global(pre::-webkit-scrollbar-thumb) {
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+  }
+  .pane :global(pre::-webkit-scrollbar-thumb:hover) {
+    background: rgba(255,255,255,0.25);
   }
 </style>
 
