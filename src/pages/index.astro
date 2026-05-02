@@ -6,6 +6,20 @@ import PageHero from '../components/PageHero.astro';
 
 <Layout description="An npm library that converts audio into haptic feedback patterns synced to any audio or video element. Works on Android Chrome, Samsung Internet, and Opera Mobile.">
 
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "audio-to-haptics",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Android",
+      "description": "An npm library that converts audio into haptic feedback patterns synced to any audio or video element.",
+      "url": "https://YOUR_DOMAIN",
+      "codeRepository": "https://github.com/AdityaAnuragi/audio-to-haptics",
+      "author": { "@type": "Person", "name": "Aditya Anuragi" }
+    })} />
+  </Fragment>
+
   <!-- HERO -->
   <section class="hero">
   <PageHero>
