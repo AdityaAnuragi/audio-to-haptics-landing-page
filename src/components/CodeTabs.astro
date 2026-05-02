@@ -97,22 +97,30 @@ const { react, vanilla } = Astro.props;
 </style>
 
 <script>
+  import { activeCodeTab } from '../store';
+
   document.querySelectorAll<HTMLElement>('.codetabs').forEach(el => {
     const tabs = el.querySelectorAll<HTMLButtonElement>('.tab');
     const panes = el.querySelectorAll<HTMLElement>('.pane');
     const copyBtn = el.querySelector<HTMLButtonElement>('.copy');
 
+    function switchTo(target: string) {
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === target));
+      panes.forEach(p => {
+        const active = p.dataset.pane === target;
+        p.classList.toggle('active', active);
+        p.classList.toggle('hidden', !active);
+      });
+    }
+
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        const target = tab.dataset.tab;
-        tabs.forEach(t => t.classList.toggle('active', t === tab));
-        panes.forEach(p => {
-          const active = p.dataset.pane === target;
-          p.classList.toggle('active', active);
-          p.classList.toggle('hidden', !active);
-        });
+        activeCodeTab.set(tab.dataset.tab!);
       });
     });
+
+    const unsubscribe = activeCodeTab.subscribe(tab => switchTo(tab));
+    document.addEventListener('astro:before-swap', unsubscribe, { once: true });
 
     copyBtn?.addEventListener('click', () => {
       const text = el.querySelector('.pane.active code')?.textContent ?? '';

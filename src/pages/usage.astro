@@ -126,7 +126,7 @@ import {
             <code class="knob-name">neighborRadius</code>
             <span class="knob-default">default: 4</span>
           </div>
-          <p class="knob-desc">How many past buckets (~240ms at default <code>bucketSize</code>) to average when computing the spike baseline. Larger = the algorithm looks further back for its reference point.</p>
+          <p class="knob-desc">How many past buckets (~240ms at default <a href="#knob-bucketSize" class="option-link"><code>bucketSize</code></a>) to average when computing the spike baseline. Larger = the algorithm looks further back for its reference point.</p>
         </div>
 
         <div class="knob">
@@ -174,7 +174,7 @@ import {
           <p class="knob-desc">PWM cycle length in milliseconds. The motor's inertia smooths rapid on/off cycles at this duration into a perceived partial amplitude. Don't go below ~20ms — cycles shorter than motor response time lose the effect.</p>
         </div>
 
-        <div class="knob">
+        <div class="knob" id="knob-bucketSize">
           <div class="knob-header">
             <code class="knob-name">bucketSize</code>
             <span class="knob-default">default: 2646</span>
@@ -363,12 +363,10 @@ import {
   }
   .knob-group:last-child { margin-bottom: 0; }
   .knob-group-label {
-    font-size: 0.7rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #999;
-    margin: 0 0 12px;
+    color: #0f0f0f;
+    margin: 0 0 4px;
   }
   .knob {
     padding: 14px 0;
