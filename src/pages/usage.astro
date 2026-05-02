@@ -78,16 +78,111 @@ import {
         <p class="how-desc">Call <code>analyze()</code> once before playback. The library fetches and decodes the audio, splits it into ~60ms buckets, and pre-computes exactly when and how hard to vibrate. Nothing is recalculated during playback — it's all ready ahead of time.</p>
       </div>
 
-      <div class="how-item">
+      <div class="how-item" id="diagram-spike">
         <DiagramSpike />
         <p class="how-desc">Each bucket is compared to the average of the buckets before it. If the current amplitude is significantly louder than the recent past, it triggers a vibration. This is edge detection — a kick drum stands out locally even inside a wall of loud music.</p>
       </div>
 
-      <div class="how-item">
+      <div class="how-item" id="diagram-pwm">
         <DiagramPWM />
-        <p class="how-desc">Short chains (a kick, a gunshot, a heartbeat) fire as a single solid pulse — just impact. Longer chains use PWM: rapid on/off cycles where the duty cycle represents intensity. The motor's inertia smooths the pulses into a perceived partial amplitude.</p>
+        <p class="how-desc">Short chains (a kick, a gunshot, a heartbeat) fire as a single solid pulse — just impact. Chains longer than <a href="#configuration" class="option-link"><code>shortChainBuckets</code></a> use PWM: rapid on/off cycles where the duty cycle represents intensity. The motor's inertia smooths the pulses into a perceived partial amplitude.</p>
       </div>
 
+    </section>
+
+    <section class="block" id="configuration">
+      <h2><a href="#configuration" class="anchor">Configuration</a></h2>
+      <p class="section-desc">All knobs are optional — pass any subset as the second argument to <code>useHaptics()</code> or the <code>HapticEngine</code> constructor. Defaults work well for most audio.</p>
+
+      <div class="knob-group">
+        <p class="knob-group-label">Spike detection</p>
+
+        <div class="knob">
+          <div class="knob-header">
+            <code class="knob-name">spikeRatio</code>
+            <span class="knob-default">default: 1.5</span>
+          </div>
+          <p class="knob-desc">How much louder the current moment needs to be compared to the recent past to trigger a vibration. Higher = fewer, punchier haptics; lower = more sensitive, fires on quieter sounds. <a href="#diagram-spike" class="diagram-link">See diagram ↑</a></p>
+        </div>
+
+        <div class="knob">
+          <div class="knob-header">
+            <code class="knob-name">sustainLowerBound</code>
+            <span class="knob-default">default: 0.75</span>
+          </div>
+          <p class="knob-desc">How much a vibrating chain can decay before it stops. <code>0.75</code> means the current bucket can be as quiet as 75% of the previous one and still keep vibrating — catches natural decay tails like a reverb or a long note fading out.</p>
+        </div>
+
+        <div class="knob">
+          <div class="knob-header">
+            <code class="knob-name">sustainUpperBound</code>
+            <span class="knob-default">default: 1.01</span>
+          </div>
+          <p class="knob-desc">How much a vibrating chain can rise before it stops sustaining. Prevents a growing section of audio from being falsely held on — only true decay tails qualify, not crescendos.</p>
+        </div>
+
+        <div class="knob">
+          <div class="knob-header">
+            <code class="knob-name">neighborRadius</code>
+            <span class="knob-default">default: 4</span>
+          </div>
+          <p class="knob-desc">How many past buckets (~240ms at default <code>bucketSize</code>) to average when computing the spike baseline. Larger = the algorithm looks further back for its reference point.</p>
+        </div>
+
+        <div class="knob">
+          <div class="knob-header">
+            <code class="knob-name">vibrateThresholdRatio</code>
+            <span class="knob-default">default: 0.4</span>
+          </div>
+          <p class="knob-desc">Noise floor as a fraction of peak amplitude. Buckets quieter than this fraction of the loudest moment in the audio never vibrate, regardless of spike ratio.</p>
+        </div>
+
+        <div class="knob">
+          <div class="knob-header">
+            <code class="knob-name">vibrateThresholdMin</code>
+            <span class="knob-default">default: 0.040</span>
+          </div>
+          <p class="knob-desc">Absolute minimum amplitude below which haptics never fire. Catches very quiet audio where the relative noise floor alone wouldn't be enough.</p>
+        </div>
+
+      </div>
+
+      <div class="knob-group">
+        <p class="knob-group-label">Intensity &amp; timing</p>
+
+        <div class="knob">
+          <div class="knob-header">
+            <code class="knob-name">shortChainBuckets</code>
+            <span class="knob-default">default: 4</span>
+          </div>
+          <p class="knob-desc">Chains shorter than this number of buckets fire as a single solid max-intensity pulse. Longer chains use PWM. Controls the split between punchy transients (kick, gunshot, heartbeat) and sustained sounds. <a href="#diagram-pwm" class="diagram-link">See diagram ↑</a></p>
+        </div>
+
+        <div class="knob">
+          <div class="knob-header">
+            <code class="knob-name">intensityFloor</code>
+            <span class="knob-default">default: 0.5</span>
+          </div>
+          <p class="knob-desc">Minimum PWM duty cycle for sustained chains. Prevents the motor from stalling on quiet audio — at 50% the motor stays spinning even at low amplitude.</p>
+        </div>
+
+        <div class="knob">
+          <div class="knob-header">
+            <code class="knob-name">cycleMs</code>
+            <span class="knob-default">default: 20</span>
+          </div>
+          <p class="knob-desc">PWM cycle length in milliseconds. The motor's inertia smooths rapid on/off cycles at this duration into a perceived partial amplitude. Don't go below ~20ms — cycles shorter than motor response time lose the effect.</p>
+        </div>
+
+        <div class="knob">
+          <div class="knob-header">
+            <code class="knob-name">bucketSize</code>
+            <span class="knob-default">default: 2646</span>
+          </div>
+          <p class="knob-desc">Audio samples per analysis bucket (~60ms at 44.1kHz). Determines the timing resolution of haptic events. Smaller = more precise, but the motor needs ~40ms to spin up so there's a practical lower limit.</p>
+        </div>
+
+      </div>
     </section>
 
     <section class="block" id="browser-support">
@@ -98,6 +193,28 @@ import {
   </div>
 
 </Layout>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('.diagram-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const id = link.getAttribute('href')?.slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const top = el.getBoundingClientRect().top + window.scrollY;
+      const centred = top - (window.innerHeight / 2) + (el.offsetHeight / 2);
+      window.scrollTo({ top: Math.max(0, centred), behavior: 'smooth' });
+      history.pushState(null, '', '#' + id);
+
+      el.classList.remove('highlight');
+      void el.offsetWidth;
+      el.classList.add('highlight');
+      el.addEventListener('animationend', () => el.classList.remove('highlight'), { once: true });
+    });
+  });
+</script>
 
 <style>
   .topbar {
@@ -218,6 +335,12 @@ import {
   }
   .recipe-desc a:hover { text-decoration: underline; }
 
+  @keyframes target-flash {
+    0%, 35% { background: rgba(124,58,237,0.13); border-radius: 12px; outline: 2px solid rgba(124,58,237,0.45); outline-offset: 10px; }
+    100%     { background: transparent;           border-radius: 12px; outline-color: transparent; }
+  }
+  .how-item:target,
+  .how-item.highlight { animation: target-flash 2.5s ease-out forwards; }
   .how-item { margin-bottom: 64px; }
   .how-item:last-child { margin-bottom: 0; }
   .how-desc {
@@ -235,12 +358,81 @@ import {
     border-radius: 4px;
   }
 
+  .knob-group {
+    margin-bottom: 32px;
+  }
+  .knob-group:last-child { margin-bottom: 0; }
+  .knob-group-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #999;
+    margin: 0 0 12px;
+  }
+  .knob {
+    padding: 14px 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .knob-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .knob-name {
+    font-family: monospace;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background: rgba(124,58,237,0.08);
+    color: #6d28d9;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .knob-default {
+    font-size: 0.75rem;
+    color: #999;
+    white-space: nowrap;
+    font-family: monospace;
+  }
+  .knob-desc {
+    font-size: 0.875rem;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .knob-desc code {
+    font-family: monospace;
+    font-size: 0.85em;
+    background: rgba(124,58,237,0.08);
+    color: #6d28d9;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .diagram-link {
+    color: #7c3aed;
+    text-decoration: none;
+    font-size: 0.8em;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .diagram-link:hover { text-decoration: underline; }
+
   .support-note {
     font-size: 0.875rem;
     color: #333;
     line-height: 1.6;
     margin: 0;
   }
+  .option-link {
+    color: inherit;
+    text-decoration: none;
+  }
+  .option-link:hover code {
+    text-decoration: underline;
+  }
+
   .support-note a {
     color: #7c3aed;
     text-decoration: none;
