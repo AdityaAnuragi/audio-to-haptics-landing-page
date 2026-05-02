@@ -46,7 +46,7 @@ import PageHero from '../components/PageHero.astro';
     <div class="banner">
       <div class="banner-inner">
         <div class="banner-text">
-          <p class="banner-title">⚠ Vibration only works on Android Chrome.</p>
+          <p class="banner-title">⚠ Vibration only works on Android Chrome, Samsung Internet, or Opera Mobile — not supported on iOS or desktop.</p>
         </div>
         <div class="banner-qr">
           <div class="qr-box">INSERT QR CODE HERE</div>
@@ -57,7 +57,7 @@ import PageHero from '../components/PageHero.astro';
   </div>
   <script>
     const ua = navigator.userAgent.toLowerCase();
-    if ('vibrate' in navigator && ua.includes('android') && ua.includes('chrome')) {
+    if ('vibrate' in navigator && ua.includes('android')) {
       document.getElementById('banner')!.style.display = 'none';
     }
   </script>
