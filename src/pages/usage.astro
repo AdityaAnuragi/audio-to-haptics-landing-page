@@ -26,7 +26,10 @@ import {
 
     <section class="block" id="install">
       <h2><a href="#install" class="anchor">Install</a></h2>
-      <pre class="code-block"><code>npm install audio-to-haptics</code></pre>
+      <div class="install-wrap">
+        <pre class="code-block"><code>npm install audio-to-haptics</code></pre>
+        <button class="install-copy">Copy</button>
+      </div>
     </section>
 
     <section class="block" id="quick-start">
@@ -195,6 +198,15 @@ import {
 </Layout>
 
 <script>
+  const installCopy = document.querySelector<HTMLButtonElement>('.install-copy');
+  installCopy?.addEventListener('click', () => {
+    void navigator.clipboard.writeText('npm install audio-to-haptics').then(() => {
+      if (!installCopy) return;
+      installCopy.textContent = 'Copied!';
+      setTimeout(() => { installCopy.textContent = 'Copy'; }, 2000);
+    });
+  });
+
   document.querySelectorAll<HTMLAnchorElement>('.diagram-link').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
@@ -286,6 +298,23 @@ import {
     font-size: 0.9rem;
     margin: 0;
   }
+  .install-wrap { position: relative; display: inline-block; width: 100%; }
+  .install-copy {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #636d83;
+    padding: 4px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 500;
+    font-family: inherit;
+    transition: color 0.15s;
+  }
+  .install-copy:hover { color: #abb2bf; }
 
   .recipe {
     margin-bottom: 40px;
