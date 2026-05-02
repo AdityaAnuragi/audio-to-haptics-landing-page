@@ -85,8 +85,12 @@ import PageHero from '../components/PageHero.astro';
   <!-- EXAMPLES -->
   <section class="examples" id="examples">
     <!-- Group 1: isolated spikes -->
-    <PageHero><p class="group-placeholder">INSERT EXPLANATION 1</p></PageHero>
+    <PageHero>
+      <p class="group-placeholder">Create a more connected experience — feel the shriek of a rev, or the rumble of a blast.</p>
+      <a href="#first-example" class="btn-ghost scroll-down">See examples ↓</a>
+    </PageHero>
 
+    <div id="first-example"></div>
     <VideoExample
       client:visible
       src="/LFA.mp4"
@@ -104,9 +108,6 @@ import PageHero from '../components/PageHero.astro';
       opts={{ sustainUpperBound: 1.1, shortChainBuckets: 6 }}
     />
 
-    <!-- Group 2: sustained sound / PWM -->
-    <PageHero><p class="group-placeholder">INSERT EXPLANATION 2</p></PageHero>
-
     <VideoExample
       client:visible
       src="AWP_fixed.mp4"
@@ -121,7 +122,7 @@ import PageHero from '../components/PageHero.astro';
   <section class="features">
     <div class="feature-card" style="grid-column: 1 / -1;">
       <p class="feature-title">Synced to what you hear</p>
-      <p class="feature-body">Haptic motors have startup latency — without compensation, vibration fires before the sound reaches your ears. The library calculates this window on every play event and suppresses haptics until audio and vibration are in sync.</p>
+      <p class="feature-body">Haptic motors have startup latency — without compensation, vibration fires before the sound reaches your ears. The library profiles this window on every play event and gates the haptic chain until the motors have fully spun up.</p>
       <!-- <a href="" class="feature-link">Blog post →</a> -->
     </div>
     <div class="feature-card">
@@ -284,12 +285,31 @@ import PageHero from '../components/PageHero.astro';
   .examples {
     max-width: 680px;
     margin: 0 auto;
-    padding: 72px 24px 48px;
+    padding: 0 24px 48px;
     display: flex;
     flex-direction: column;
     gap: 32px;
   }
-  .group-placeholder { color: #333; font-size: 0.95rem; margin: 0; }
+  .group-placeholder {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    color: #111;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  :global(.fade-group:has(.group-placeholder)) {
+    min-height: 100vh;
+    justify-content: center;
+  }
+  .scroll-down {
+    border-color: rgba(0,0,0,0.18);
+    color: rgba(0,0,0,0.5);
+    margin-top: 28px;
+  }
+  .scroll-down:hover { border-color: rgba(0,0,0,0.4); color: #111; }
 
   /* ── FEATURES ────────────────────────── */
   .features {
