@@ -25,18 +25,18 @@ import {
     <h1>Usage</h1>
 
     <section class="block" id="install">
-      <h2>Install</h2>
+      <h2><a href="#install" class="anchor">Install</a></h2>
       <pre class="code-block"><code>npm install audio-to-haptics</code></pre>
     </section>
 
     <section class="block" id="quick-start">
-      <h2>Quick start</h2>
+      <h2><a href="#quick-start" class="anchor">Quick start</a></h2>
       <p class="section-desc">Analyze an audio or video file once — the library pre-computes when and how hard to vibrate. After that, just play the media and haptics fire automatically in sync, driven by a <code>requestAnimationFrame</code> loop.</p>
       <CodeTabs react={BASIC_REACT} vanilla={BASIC_VANILLA} />
     </section>
 
     <section class="block" id="examples">
-      <h2>Examples <span class="examples-note">(snippets only — combine with the quick start above for full working code)</span></h2>
+      <h2><a href="#examples" class="anchor">Examples</a> <span class="examples-note">(snippets only — combine with the quick start above for full working code)</span></h2>
 
       <div class="recipe">
         <h3>URL or file input</h3>
@@ -71,7 +71,7 @@ import {
     </section>
 
     <section class="block" id="how-it-works">
-      <h2>How it works</h2>
+      <h2><a href="#how-it-works" class="anchor">How it works</a></h2>
 
       <div class="how-item">
         <DiagramPipeline />
@@ -91,7 +91,7 @@ import {
     </section>
 
     <section class="block" id="browser-support">
-      <h2>Browser support</h2>
+      <h2><a href="#browser-support" class="anchor">Browser support</a></h2>
       <p class="support-note">Haptics require the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Vibration_API" target="_blank" rel="noopener">Web Vibration API</a> — currently Android Chrome only. On desktop or iOS the library loads and analyzes normally, vibration calls are silently skipped.</p>
     </section>
 
@@ -143,13 +143,16 @@ import {
   }
 
   h2 {
-    font-size: 0.75rem;
+    font-size: 1.375rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #7c3aed;
+    color: #0f0f0f;
     margin: 0 0 16px;
   }
+  .anchor {
+    color: inherit;
+    text-decoration: none;
+  }
+  .anchor:hover { text-decoration: underline; }
   .examples-note {
     font-size: 0.7rem;
     font-weight: 500;
@@ -215,7 +218,7 @@ import {
   }
   .recipe-desc a:hover { text-decoration: underline; }
 
-  .how-item { margin-bottom: 32px; }
+  .how-item { margin-bottom: 64px; }
   .how-item:last-child { margin-bottom: 0; }
   .how-desc {
     font-size: 0.875rem;
