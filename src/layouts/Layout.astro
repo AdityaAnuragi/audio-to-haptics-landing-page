@@ -1,3 +1,14 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'audio-to-haptics',
+  description = 'An npm library that converts audio into haptic feedback patterns synced to any audio or video element. Works on Android Chrome, Samsung Internet, and Opera Mobile.',
+} = Astro.props;
+const fullTitle = title === 'audio-to-haptics' ? title : `${title} — audio-to-haptics`;
+---
 <!doctype html>
 <html lang="en">
 	<head>
@@ -5,7 +16,22 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
-<title>audio-to-haptics</title>
+		<title>{fullTitle}</title>
+		<meta name="description" content={description} />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<!-- TODO: set og:url and og:image once deployed to Cloudflare Pages -->
+		<!-- <meta property="og:url" content="https://YOUR_DOMAIN" /> -->
+		<!-- <meta property="og:image" content="https://YOUR_DOMAIN/og.png" /> -->
+
+		<!-- Twitter card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<!-- <meta name="twitter:image" content="https://YOUR_DOMAIN/og.png" /> -->
 	</head>
 	<body>
 		<slot />
