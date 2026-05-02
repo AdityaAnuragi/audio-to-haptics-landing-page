@@ -42,31 +42,31 @@ import {
       <h2><a href="#examples" class="anchor">Examples</a> <span class="examples-note">(snippets only — combine with the quick start above for full working code)</span></h2>
 
       <div class="recipe">
-        <h3>URL or file input</h3>
+        <h3>1. URL or file input</h3>
         <p class="recipe-desc">Both paths use the same hook — <code>analyze()</code> takes a URL, <code>analyzeBuffer()</code> takes raw bytes from a file input or drag-and-drop.</p>
         <CodeTabs react={FILE_REACT} vanilla={FILE_VANILLA} />
       </div>
 
       <div class="recipe">
-        <h3>Works with video too</h3>
+        <h3>2. Works with video too</h3>
         <p class="recipe-desc">Pass a <code>videoRef</code> instead of <code>audioRef</code> — the hook and engine attach to whichever media element you give them.</p>
         <CodeTabs react={VIDEO_REACT} vanilla={VIDEO_VANILLA} />
       </div>
 
       <div class="recipe">
-        <h3>Mute and unmute</h3>
+        <h3>3. Mute and unmute</h3>
         <p class="recipe-desc">Suppress haptics without stopping playback or losing the analysis. One flag, instant toggle.</p>
         <CodeTabs react={MUTE_REACT} vanilla={MUTE_VANILLA} />
       </div>
 
       <div class="recipe">
-        <h3>Drive a visual</h3>
+        <h3>4. Drive a visual</h3>
         <p class="recipe-desc">The library exposes per-frame amplitude and chain type so you can sync any visual — SVG, canvas, CSS — to the same data driving the haptics. The visualiser on the <a href="/#examples">landing page</a> is built with exactly this.</p>
         <CodeTabs react={VISUAL_REACT} vanilla={VISUAL_VANILLA} />
       </div>
 
       <div class="recipe">
-        <h3>Custom options</h3>
+        <h3>5. Custom options</h3>
         <p class="recipe-desc">Tune how the algorithm detects haptic events. Try them live in the <a href="/playground">playground →</a></p>
         <CodeTabs react={OPTS_REACT} vanilla={OPTS_VANILLA} />
       </div>
