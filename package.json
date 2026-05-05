@@ -16,7 +16,7 @@
     "@nanostores/react": "^1.1.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "astro": "^6.1.5",
+    "astro": "^6.2.2",
     "audio-to-haptics": "^0.0.1",
     "nanostores": "^1.2.0",
     "react": "^19.2.5",
