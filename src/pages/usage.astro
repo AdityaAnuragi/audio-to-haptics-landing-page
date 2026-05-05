@@ -193,6 +193,8 @@ import {
       <p class="support-note">Haptics require the <a href="https://caniuse.com/vibration" target="_blank" rel="noopener">Web Vibration API</a> — supported on Android in Chrome, Samsung Internet, and Opera Mobile. Not supported on iOS (Safari or Chrome) or desktop. On unsupported platforms the library loads and analyzes normally, vibration calls are silently skipped.</p>
     </section>
 
+    <p class="further-reading">How it's built, the algorithm, and the Android mute window — <a href="https://dev.to/adityaanuragi00128/audio-to-haptics-perfectly-syncing-phone-vibration-to-audio-on-the-web-how-i-made-it-3gip" target="_blank" rel="noopener">read the full writeup on Dev.to →</a></p>
+
   </div>
 
 </Layout>
@@ -466,4 +468,17 @@ import {
     font-weight: 500;
   }
   .support-note a:hover { text-decoration: underline; }
+
+  .further-reading {
+    font-size: 0.875rem;
+    color: #555;
+    margin: 32px 0 0;
+    line-height: 1.6;
+  }
+  .further-reading a {
+    color: #7c3aed;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .further-reading a:hover { text-decoration: underline; }
 </style>

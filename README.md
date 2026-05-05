@@ -31,3 +31,7 @@ npm run preview
 ## Library
 
 The library repo lives at [AdityaAnuragi/audio-to-haptics](https://github.com/AdityaAnuragi/audio-to-haptics).
+
+## Writeup
+
+Full story — how it's built, the algorithm, and the Android mute window: [INSERT_DEVTO_URL]
