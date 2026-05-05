@@ -34,4 +34,4 @@ The library repo lives at [AdityaAnuragi/audio-to-haptics](https://github.com/Ad
 
 ## Writeup
 
-Full story — how it's built, the algorithm, and the Android mute window: [INSERT_DEVTO_URL]
+Full story — how it's built, the algorithm, and the Android mute window: https://dev.to/adityaanuragi00128/audio-to-haptics-perfectly-syncing-phone-vibration-to-audio-on-the-web-how-i-made-it-3gip
