@@ -8,12 +8,15 @@ const {
   description = 'An npm library that converts audio into haptic feedback patterns synced to any audio or video element. Works on Android Chrome, Samsung Internet, and Opera Mobile.',
 } = Astro.props;
 const fullTitle = title === 'audio-to-haptics' ? title : `${title} — audio-to-haptics`;
+const canonicalURL = new URL(Astro.url.pathname, 'https://audio-to-haptics.pages.dev');
 ---
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link rel="canonical" href={canonicalURL} />
 
 		<title>{fullTitle}</title>
 		<meta name="description" content={description} />
@@ -22,15 +25,14 @@ const fullTitle = title === 'audio-to-haptics' ? title : `${title} — audio-to-
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content={fullTitle} />
 		<meta property="og:description" content={description} />
-		<!-- TODO: set og:url and og:image once deployed to Cloudflare Pages -->
-		<!-- <meta property="og:url" content="https://YOUR_DOMAIN" /> -->
-		<!-- <meta property="og:image" content="https://YOUR_DOMAIN/og.png" /> -->
+		<meta property="og:url" content="https://audio-to-haptics.pages.dev" />
+		<meta property="og:image" content="https://audio-to-haptics.pages.dev/og.png" />
 
 		<!-- Twitter card -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={fullTitle} />
 		<meta name="twitter:description" content={description} />
-		<!-- <meta name="twitter:image" content="https://YOUR_DOMAIN/og.png" /> -->
+		<meta name="twitter:image" content="https://audio-to-haptics.pages.dev/og.png" />
 		<slot name="head" />
 	</head>
 	<body>
