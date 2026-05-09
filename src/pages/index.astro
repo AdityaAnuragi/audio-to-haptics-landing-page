@@ -61,20 +61,6 @@ import PageHero from '../components/PageHero.astro';
   </div>
   </section>
 
-  <!-- DESKTOP WARNING BANNER -->
-  <div class="banner-wrap" id="banner">
-    <div class="banner">
-      <div class="banner-inner">
-        <div class="banner-text">
-          <p class="banner-title">⚠ Vibration only works on Android Chrome, Samsung Internet, or Opera Mobile — not supported on iOS or desktop.</p>
-        </div>
-        <div class="banner-qr">
-          <div class="qr-box"><img src="/qr.png" alt="QR code for audio-to-haptics.pages.dev" width="96" height="96" /></div>
-          <p class="qr-label">Scan on your Android phone</p>
-        </div>
-      </div>
-    </div>
-  </div>
   <script>
     const ua = navigator.userAgent.toLowerCase();
     if ('vibrate' in navigator && ua.includes('android')) {
@@ -87,6 +73,20 @@ import PageHero from '../components/PageHero.astro';
     <!-- Group 1: isolated spikes -->
     <PageHero>
       <p class="group-placeholder">Create a more connected experience — feel the shriek of a rev, or the rumble of a blast.</p>
+      <!-- DESKTOP WARNING BANNER -->
+      <div class="banner-wrap" id="banner">
+        <div class="banner">
+          <div class="banner-inner">
+            <div class="banner-text">
+              <p class="banner-title">⚠ Vibration only works on Android Chrome, Samsung Internet, or Opera Mobile — not supported on iOS or desktop.</p>
+            </div>
+            <div class="banner-qr">
+              <div class="qr-box"><img src="/qr.png" alt="QR code for audio-to-haptics.pages.dev" width="96" height="96" /></div>
+              <p class="qr-label">Scan on your Android phone</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <a href="#first-example" class="btn-ghost scroll-down">See examples ↓</a>
     </PageHero>
 
